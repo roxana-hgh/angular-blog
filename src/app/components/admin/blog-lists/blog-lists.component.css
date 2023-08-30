@@ -1,0 +1,9 @@
+.blog-item img {
+    width: 5em ;
+    height: 3em;
+}
+
+.title a {
+    color: #1d1d1d;
+    text-decoration: none;
+}

@@ -1,1 +1,13 @@
-<p>all-blogs works!</p>
+<section id="gallery">
+    <div class="container px-0">
+        <h1 class="section-title mb-4 fs-5">Latest Blogs</h1>
+        <div class="row ">
+            <div class="col-lg-4 mb-4" *ngFor="let blog of blogs">
+            <app-blog-card [id]="blog.id"></app-blog-card>
+            </div>
+
+        
+           
+        </div>
+    </div>
+</section>

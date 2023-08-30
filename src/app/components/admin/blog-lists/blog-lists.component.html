@@ -1,0 +1,39 @@
+<div class="head my-3 d-flex justify-content-between">
+   <div class="d-flex align-items-center gap-3" >
+      
+        <button type="button" class="btn btn-outline-secondary">Sort: A-Z</button>
+        <button type="button" class="btn btn-outline-secondary ">Sort: Z-A</button>
+        <button type="button" (click)="open(content)" class="btn btn-outline-danger">Delete</button>
+
+   </div>
+    <button class="btn btn-dark fw-bolde"  [routerLink]="['/admin','add-blog']">Add new Blog</button>
+</div>
+
+<ul class="list-group ">
+    <li class="list-group-item d-flex align-items-center" *ngFor="let blog of blogs">
+        <input class="form-check-input me-1" type="checkbox" value="" id="Checkbox{{blog.id}}">
+        <label class="form-check-label mx-3" for="Checkbox{{blog.id}}">
+            <div class="blog-item d-flex align-items-center">
+                <img  src="{{blog.image}}" class="d-block mx-3 rounded" alt="">
+                <h5 class="title"><a [routerLink]="['/admin','edit-blog', blog.id]">{{blog.title}}</a></h5>
+            </div>
+
+        </label>
+    </li>
+    
+</ul>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Delete Blog</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        Are you Sure?
+        
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="modal.close('Save click')">Cancel</button>
+        <button type="button" class="btn btn-danger">Yes</button>
+    </div>
+</ng-template>
