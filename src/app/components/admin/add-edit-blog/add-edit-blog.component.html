@@ -1,1 +1,32 @@
-<p>add-edit-blog works!</p>
+<div class="row">
+    {{blog.title}}
+    <div class="col-12 col-lg-8">
+        <form>
+            <div class="row mb-3">
+                <label for="titleInput" class="col-md-2 col-form-label">Title</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="titleInput">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="descriptionInput" class="col-md-2 col-form-label">Description</label>
+                <div class="col-md-10">
+                    
+                    <textarea class="form-control"rows="10" id="descriptionInput"></textarea>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="imageInput" class="col-md-2 col-form-label">Image</label>
+                <div class="col-md-10">
+                    <input class="form-control" type="file" name="" id="imageInput">
+                
+                </div>
+            </div>
+    
+    
+            <button type="submit" class="btn btn-dark d-block w-100 mt-4 ms-auto">Save</button>
+        </form>
+    </div>
+
+</div>
