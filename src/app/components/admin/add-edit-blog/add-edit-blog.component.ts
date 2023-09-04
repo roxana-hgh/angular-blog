@@ -11,9 +11,9 @@ import { BlogsService } from 'src/app/services/blogs.service';
   styleUrls: ['./add-edit-blog.component.css'],
 })
 export class AddEditBlogComponent implements OnInit {
-  form: FormGroup | null = null;
+  form!: FormGroup ;
   blog!: Blog;
-  id !: number;
+  id!: number;
 
   constructor(
     private router: Router,
@@ -23,9 +23,20 @@ export class AddEditBlogComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.captureIdFromURL();
+   
+    
     if (this.id) {
       this.getBlog(this.id);
+    } else {
+      this.formGenerator(null)
     }
+    console.log(this.form);
+
+        
+          let fd = new FormData();
+          console.log(fd);
+        
+    
   }
 
   private captureIdFromURL() {
@@ -42,8 +53,37 @@ export class AddEditBlogComponent implements OnInit {
     this.blogService.get_blog(id).subscribe((blog) => {
       if (blog) {
         this.blog = blog;
-        // this.formGenerator(this.blog);
+        this.formGenerator(this.blog);
+        
+        
       }
     });
+  }
+
+  private formGenerator(blog: Blog | null) {
+    this.form = new FormGroup({
+      id: new FormControl(blog ? blog.id : null),
+      title: new FormControl(blog ? blog.title : '', [
+        Validators.required,
+        Validators.maxLength(250),
+      ]),
+      description: new FormControl(
+        blog ? blog.description : '',
+        Validators.maxLength(100000)
+      ),
+      Image: new FormControl(blog ? blog.image : ''),
+      Date: new FormControl(blog ? blog.date : new Date()),
+    });
+  }
+
+
+  save() {
+    if (this.form?.valid) { 
+      let fd = new FormData();
+   console.log(fd);
+   
+
+    }
+    
   }
 }

@@ -1,25 +1,30 @@
 <div class="row">
-    {{blog.title}}
-    <div class="col-12 col-lg-8">
-        <form>
+   <h2 class="mb-4" *ngIf="blog; else AddNew">Edit "{{blog.title}}"</h2>
+<ng-template #AddNew>
+    <h2 class="mb-4">Add New blog</h2>
+</ng-template>
+    <div class="col-12 col-lg-8 mt-3">
+        <form [formGroup]="form">
+
             <div class="row mb-3">
                 <label for="titleInput" class="col-md-2 col-form-label">Title</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="titleInput">
+                    <input type="text" formControlName="title" class="form-control" id="titleInput">
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="descriptionInput" class="col-md-2 col-form-label">Description</label>
                 <div class="col-md-10">
                     
-                    <textarea class="form-control"rows="10" id="descriptionInput"></textarea>
+                    <textarea class="form-control"rows="10" formControlName="description" id="descriptionInput"></textarea>
                 </div>
             </div>
 
             <div class="row mb-3">
                 <label for="imageInput" class="col-md-2 col-form-label">Image</label>
                 <div class="col-md-10">
-                    <input class="form-control" type="file" name="" id="imageInput">
+                    <!-- <input class="form-control" type="file" name="" id="imageInput"> -->
+                    <input class="form-control" formControlName="Image" type="text" name="" id="">
                 
                 </div>
             </div>
@@ -27,6 +32,17 @@
     
             <button type="submit" class="btn btn-dark d-block w-100 mt-4 ms-auto">Save</button>
         </form>
+    </div>
+    <div class="col-12 col-lg-4   p-3">
+        
+        <div class="border rounded p-3">
+            <h5 class="text-center mb-3">{{form.value.title}}</h5>
+            <img class="w-100 rounded d-block my-3" src="{{form.value.Image}}" alt="blog image">
+            <p class="">
+                {{form.value.description}}
+            </p>
+        </div>
+
     </div>
 
 </div>

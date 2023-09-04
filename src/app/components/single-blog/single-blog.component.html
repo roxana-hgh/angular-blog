@@ -1,5 +1,14 @@
-<div class="container p-3">
-    <h1 class="text-center mb-3">{{blog.title}}</h1>
-    <img src="{{blog.image}}" class="img-fluid my-4 d-block mx-auto" alt="">
-    <p class="w-75 mx-auto">{{blog.description}}</p>
+
+
+<div class="container">
+    <div class="row g-0 py-5 justify-content-between">
+        <div class="col-lg-8  ps-0 ">
+            <h1 class="text-center mb-3">{{blog.title}}</h1>
+            <img src="{{blog.image}}" class="img-fluid w-100 my-4 d-block mx-auto" alt="">
+            <p class=" mx-auto">{{blog.description}}</p>
+        </div>
+        <div class="col-lg-3 p-4 ">
+            <app-side></app-side>
+        </div>
+    </div>
 </div>
