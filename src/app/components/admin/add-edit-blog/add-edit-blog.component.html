@@ -4,12 +4,18 @@
     <h2 class="mb-4">Add New blog</h2>
 </ng-template>
     <div class="col-12 col-lg-8 mt-3">
-        <form [formGroup]="form">
+        <form [formGroup]="form" >
 
             <div class="row mb-3">
                 <label for="titleInput" class="col-md-2 col-form-label">Title</label>
                 <div class="col-md-10">
                     <input type="text" formControlName="title" class="form-control" id="titleInput">
+                </div>
+            </div>
+            <div class="row mb-3 d-none">
+                <label for="titleInput" class="col-md-2 col-form-label">date</label>
+                <div class="col-md-10">
+                    <input type="text" formControlName="Date" class="form-control" id="DateInput">
                 </div>
             </div>
             <div class="row mb-3">
@@ -30,14 +36,14 @@
             </div>
     
     
-            <button type="submit" class="btn btn-dark d-block w-100 mt-4 ms-auto">Save</button>
+            <button type="button" (click)="save()" class="btn btn-dark d-block w-100 mt-4 ms-auto">Save</button>
         </form>
     </div>
-    <div class="col-12 col-lg-4   p-3">
-        
+    <div class="col-12 col-lg-4 px-3">
+        <h5 class="text-center text-muted mb-2">Preview</h5>
         <div class="border rounded p-3">
             <h5 class="text-center mb-3">{{form.value.title}}</h5>
-            <img class="w-100 rounded d-block my-3" src="{{form.value.Image}}" alt="blog image">
+            <img class="w-100 rounded d-block my-3" src="{{form.value.Image}}" alt="">
             <p class="">
                 {{form.value.description}}
             </p>

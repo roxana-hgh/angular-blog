@@ -17,4 +17,15 @@ export class BlogsService {
   get_blog(id: number) {
     return this.http.get<Blog>(this.rootURL + `/${id}`);
   }
+
+  add_blog(newData: any) {
+    return this.http.post(this.rootURL, newData);
+  }
+  update_Blog(id: number, newData: any) {
+    return this.http.put<any>(this.rootURL + `/${id}`, newData);
+  }
+
+  delete_Blog(id: number) {
+    return this.http.delete<Blog>(this.rootURL + `/${id}`);
+  }
 }

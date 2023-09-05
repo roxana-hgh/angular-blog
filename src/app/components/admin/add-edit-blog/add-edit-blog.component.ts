@@ -11,9 +11,26 @@ import { BlogsService } from 'src/app/services/blogs.service';
   styleUrls: ['./add-edit-blog.component.css'],
 })
 export class AddEditBlogComponent implements OnInit {
-  form!: FormGroup ;
+  form!: FormGroup;
   blog!: Blog;
   id!: number;
+
+  get blog_id() {
+    return this.form?.get('id');
+  }
+  get title() {
+    return this.form?.get('title');
+  }
+  get description() {
+    return this.form?.get('description');
+  }
+  get image() {
+    return this.form?.get('image');
+  }
+
+  get date() {
+    return this.form?.get('Date');
+  }
 
   constructor(
     private router: Router,
@@ -23,39 +40,26 @@ export class AddEditBlogComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.captureIdFromURL();
-   
-    
+
     if (this.id) {
       this.getBlog(this.id);
+    
+      
     } else {
-      this.formGenerator(null)
+      this.formGenerator(null);
     }
     console.log(this.form);
-
-        
-          let fd = new FormData();
-          console.log(fd);
-        
-    
   }
 
   private captureIdFromURL() {
-    // get id form url (if there is id so we update specific blog with that id
-    // and if there is no id so we create the blog)
-
     return Number(this.route.snapshot.paramMap.get('id'));
   }
 
   private getBlog(id: number) {
-    // use blog service to get blog with the id in argument
-    // then we generate a form with that blog data
-
     this.blogService.get_blog(id).subscribe((blog) => {
       if (blog) {
         this.blog = blog;
-        this.formGenerator(this.blog);
-        
-        
+         this.formGenerator(this.blog);
       }
     });
   }
@@ -76,14 +80,45 @@ export class AddEditBlogComponent implements OnInit {
     });
   }
 
-
   save() {
-    if (this.form?.valid) { 
+    if (this.form?.valid) {
       let fd = new FormData();
-   console.log(fd);
-   
 
+      if (this.title?.value != (this.blog ? this.blog.title : '')) {
+        fd.append('title', this.title?.value);
+      }
+
+       if (this.description?.value != (this.blog ? this.blog.description : '')) {
+         fd.append('description', this.description?.value);
+       }
+      
+      if (this.image?.value != (this.blog ? this.blog.image : '')) {
+        fd.append('image', this.image?.value);
+      }
+
+      if (this.date?.value != (this.blog ? this.blog.date : '')) {
+        fd.append('date', this.date?.value);
+      }
+
+      
+      
+
+      if (this.blog) {
+        this.blogService
+          .update_Blog(this.id, this.form.value)
+          .subscribe((blog) => {
+            console.log('updated');
+          });
+        
+      } else {
+        this.blogService.add_blog(this.form.value).subscribe((blog) => {
+        
+          console.log('added');
+        });
+      }
+
+
+      
     }
-    
   }
 }
