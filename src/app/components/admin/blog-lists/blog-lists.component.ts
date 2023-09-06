@@ -3,7 +3,7 @@ import {
   ModalDismissReasons,
   NgbModal,
 } from '@ng-bootstrap/ng-bootstrap';
-
+import {  Router } from '@angular/router';
 import { Blog } from 'src/app/interfaces/blog';
 import { BlogsService } from 'src/app/services/blogs.service';
 
@@ -18,7 +18,8 @@ export class BlogListsComponent implements OnInit {
 
   constructor(
     private blogsService: BlogsService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -30,6 +31,12 @@ export class BlogListsComponent implements OnInit {
   open(content: any) {
 		this.modalService.open(content, { centered: true });
 	}
+  delete(id: number){
+    this.blogsService.delete_Blog(id).subscribe(()=> {
+      this.router.navigate(['admin'])
+    })
+
+  }
 
 	
 

@@ -12,10 +12,16 @@
 <ul class="list-group ">
     <li class="list-group-item d-flex align-items-center" *ngFor="let blog of blogs">
         <input class="form-check-input me-1" type="checkbox" value="" id="Checkbox{{blog.id}}">
-        <label class="form-check-label mx-3" for="Checkbox{{blog.id}}">
-            <div class="blog-item d-flex align-items-center">
-                <img  src="{{blog.image}}" class="d-block mx-3 rounded" alt="">
+        <label class="form-check-label w-100  mx-3" for="Checkbox{{blog.id}}">
+            <div class="blog-item d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <img  src="{{blog.image}}" class="d-block mx-3 rounded" alt="">
                 <h5 class="title"><a [routerLink]="['/admin','edit-blog', blog.id]">{{blog.title}}</a></h5>
+                </div>
+                <div class="d-block ms-auto">
+                    <a [routerLink]="['/admin','edit-blog', blog.id]" class="btn text-secondary">edit</a>
+                    <button (click)="delete(blog.id)"  class="btn text-danger">delete</button>
+                </div>
             </div>
 
         </label>

@@ -26,6 +26,6 @@ export class BlogsService {
   }
 
   delete_Blog(id: number) {
-    return this.http.delete<Blog>(this.rootURL + `/${id}`);
+    return this.http.delete<any>(this.rootURL + `/${id}`);
   }
 }
