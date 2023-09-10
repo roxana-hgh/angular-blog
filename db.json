@@ -12,7 +12,8 @@
       "title": "updated title",
       "description": "SGDG updated blog description2 dfsdgffg fggggf fdfdfd",
       "image": "https://images.unsplash.com/photo-1594149929911-78975a43d4f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-      "date": "2023-09-05T12:16:40.824Z"
+      "date": "2023-09-05T12:16:40.824Z",
+      
     },
     {
       "id": 6,
@@ -37,7 +38,7 @@
     },
     {
       "id": 9,
-      "title": "a dog that looks like pepper",
+      "title": "A dog running",
       "description": "this dog looks similar to mine! :)",
       "image": "https://images.unsplash.com/photo-1534628526458-a8de087b1123?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
       "date": "2023-09-06T10:33:31.985Z"

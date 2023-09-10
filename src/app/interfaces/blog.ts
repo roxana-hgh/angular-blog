@@ -4,4 +4,5 @@ export interface Blog {
   image: string;
   description: string;
   date: Date;
+  check?: boolean;
 }
