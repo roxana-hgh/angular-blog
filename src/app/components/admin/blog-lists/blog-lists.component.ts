@@ -15,6 +15,7 @@ import { R3SelectorScopeMode } from '@angular/compiler';
 })
 export class BlogListsComponent implements OnInit {
   blogs!: Blog[];
+  checksToggle: boolean = false;
   selected: number = 0;
 
   constructor(
@@ -53,11 +54,10 @@ export class BlogListsComponent implements OnInit {
     return count;
   }
 
-  toggleAllSelect(event: any) {
-    this.blogs.map(blog => {
-      blog.check = event.target.checked
-    })
-    
+  toggleAllSelect() {
+    this.blogs.map((blog) => {
+      blog.check = this.checksToggle;
+    });
   }
 
   // ToDo:
@@ -65,6 +65,41 @@ export class BlogListsComponent implements OnInit {
   //   get selected title
   //   delete selected
   //   show modal base on message
+
+  getCheckeds(): any {
+    // return: list of blog --> return all blogs which their check prop is equal to true
+
+    if (this.blogs)
+      return this.blogs.filter((blog) => {
+        if (blog.check) {
+          return blog;
+        }
+        return null;
+      });
+  }
+
+  private prepareBlogsTitle(blogs: any[]) {
+    // arg: list of blogs
+    // return: list of string which they are title of blogs
+    // get title of each blog of blogs (arg) then return them as a list
+
+    let list_of_titles: any[] = [];
+    blogs.forEach((blog: { title: any }) => {
+      list_of_titles.push(blog.title);
+    });
+    return list_of_titles;
+  }
+
+  private getBlogsIds(blogs: any[]) {
+    // arg: blogs --> blog which we want their ids
+    // return: list of blogs ids
+
+    let id_list: any[] = [];
+    blogs.forEach((blog: { id: any }) => {
+      id_list.push(blog.id);
+    });
+    return id_list;
+  }
 
   open(content: any) {
     this.modalService.open(content, { centered: true });

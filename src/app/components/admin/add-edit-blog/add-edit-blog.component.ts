@@ -64,16 +64,12 @@ export class AddEditBlogComponent implements OnInit {
     });
   }
   
+  // TODO:
+  // add form validator 
 
+  
   save() {
     if (this.form?.valid) {
-      // let fd = new FormData();
-
-
-      
-      console.log(this.form.value);
-      
-
       if (this.blog) {
         this.blogService
           .update_Blog(this.id, this.form.value)
@@ -85,14 +81,11 @@ export class AddEditBlogComponent implements OnInit {
       } else {
         this.blogService.add_blog(this.form.value).subscribe((blog) => {
         console.log(blog);
-        
+
           console.log('added');
           this.router.navigate(['home'])
         });
       }
-
-
-      
     }
   }
 }
