@@ -19,6 +19,7 @@ import { SingleBlogComponent } from './components/single-blog/single-blog.compon
 import { AdminComponent } from './components/admin/admin.component';
 import { AddEditBlogComponent } from './components/admin/add-edit-blog/add-edit-blog.component';
 import { BlogListsComponent } from './components/admin/blog-lists/blog-lists.component';
+import { ConfirmDeleteComponent } from './modals/confirm-delete/confirm-delete.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { BlogListsComponent } from './components/admin/blog-lists/blog-lists.com
     AdminComponent,
     AddEditBlogComponent,
     BlogListsComponent,
+    ConfirmDeleteComponent,
   ],
   imports: [
     BrowserModule,

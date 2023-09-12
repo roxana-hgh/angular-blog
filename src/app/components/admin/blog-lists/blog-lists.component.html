@@ -9,7 +9,7 @@
       
         <button type="button" class="btn btn-outline-secondary">Sort: A-Z</button>
         <button type="button" class="btn btn-outline-secondary ">Sort: Z-A</button>
-        <button *ngIf="checkedCount() > 0" type="button" (click)="open(content)" class="btn btn-outline-danger">Delete</button>
+        <button *ngIf="checkedCount() > 0" type="button" (click)="openConfirmDeleteModal()" class="btn btn-outline-danger">Delete</button>
 
    </div>
     <button class="btn btn-dark fw-bolde"  [routerLink]="['/admin','add-blog']">Add new Blog</button>

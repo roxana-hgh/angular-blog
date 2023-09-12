@@ -6,7 +6,8 @@ import {
 import {  Router } from '@angular/router';
 import { Blog } from 'src/app/interfaces/blog';
 import { BlogsService } from 'src/app/services/blogs.service';
-import { R3SelectorScopeMode } from '@angular/compiler';
+import { ConfirmDeleteComponent } from 'src/app/modals/confirm-delete/confirm-delete.component';
+
 
 @Component({
   selector: 'app-blog-lists',
@@ -20,9 +21,13 @@ export class BlogListsComponent implements OnInit {
 
   constructor(
     private blogsService: BlogsService,
-    private modalService: NgbModal,
+    private modal: NgbModal,
     private router: Router
-  ) {}
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => {
+      return false;
+    };
+  }
 
   ngOnInit(): void {
     this.blogsService.get_all_blogs().subscribe((blogs) => {
@@ -101,13 +106,36 @@ export class BlogListsComponent implements OnInit {
     return id_list;
   }
 
-  open(content: any) {
-    this.modalService.open(content, { centered: true });
+   openConfirmDeleteModal() {
+    // open deletion modal... if aprove then delete selected blogs
+
+    // prepare checked blogs titles
+    let checked_blogs = this.getCheckeds();
+    let blogs_titles = this.prepareBlogsTitle(checked_blogs);
+
+    // open modal
+    let modal = this.modal.open(ConfirmDeleteComponent, {
+      centered: true,
+    });
+
+    // set modal's input
+    modal.componentInstance.deleted_objects_titles = blogs_titles;
+
+    // on close modal
+    modal.closed.subscribe(() => {
+      this.deleteBlogs(checked_blogs);
+    });
   }
   delete(id: number) {
     this.blogsService.delete_Blog(id).subscribe(() => {
-      this.router.navigate(['admin']);
+      this.router.navigateByUrl('/admin');
     });
+  }
+
+  deleteBlogs(checked_blogs: Blog[]) {
+    checked_blogs.forEach(blog => {
+      this.delete(blog.id)
+    })
   }
 }
 
