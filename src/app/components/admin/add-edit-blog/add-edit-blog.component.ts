@@ -54,7 +54,10 @@ export class AddEditBlogComponent implements OnInit {
   private formGenerator(blog: Blog | null) {
     this.form = new FormGroup({
       id: new FormControl(blog ? blog.id : null),
-      title: new FormControl(blog ? blog.title : '', Validators.minLength(3)),
+      title: new FormControl(blog ? blog.title : '', [
+        Validators.minLength(3),
+        Validators.required
+      ]),
       description: new FormControl(
         blog ? blog.description : '',
         Validators.maxLength(100000)
