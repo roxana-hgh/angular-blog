@@ -80,6 +80,7 @@ export class AddEditBlogComponent implements OnInit {
           .subscribe((blog) => {
             console.log(blog);
             console.log('updated');
+            this.router.navigate(['home'])
           });
         
       } else {
