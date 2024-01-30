@@ -1,9 +1,15 @@
-<div class="head my-3 d-flex justify-content-between">
-   <div class="d-flex align-items-center gap-3" >
+<div class="head my-3 d-flex justify-content-between border rounded p-3">
+   <div class="d-flex align-items-center gap-3 " >
+    <div class="form-check ">
+        <input class="form-check-input" title="Toggle all" [(ngModel)]="checksToggle" (change)="toggleAllSelect()" type="checkbox" value="" id="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault"*ngIf="checkedCount() > 0">{{ checkedCount() }} item selected
+        </label>
+    </div>
+
       
         <button type="button" class="btn btn-outline-secondary">Sort: A-Z</button>
         <button type="button" class="btn btn-outline-secondary ">Sort: Z-A</button>
-        <button type="button" (click)="open(content)" class="btn btn-outline-danger">Delete</button>
+        <button *ngIf="checkedCount() > 0" type="button" (click)="openConfirmDeleteModal()" class="btn btn-outline-danger">Delete</button>
 
    </div>
     <button class="btn btn-dark fw-bolde"  [routerLink]="['/admin','add-blog']">Add new Blog</button>
@@ -11,7 +17,7 @@
 
 <ul class="list-group ">
     <li class="list-group-item d-flex align-items-center" *ngFor="let blog of blogs">
-        <input class="form-check-input me-1" type="checkbox" value="" id="Checkbox{{blog.id}}">
+        <input class="form-check-input me-1" [(ngModel)]="blog.check" (change)="checkedCount()" type="checkbox" value="" id="Checkbox{{blog.id}}">
         <label class="form-check-label w-100  mx-3" for="Checkbox{{blog.id}}">
             <div class="blog-item d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">

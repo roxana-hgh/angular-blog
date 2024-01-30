@@ -54,7 +54,10 @@ export class AddEditBlogComponent implements OnInit {
   private formGenerator(blog: Blog | null) {
     this.form = new FormGroup({
       id: new FormControl(blog ? blog.id : null),
-      title: new FormControl(blog ? blog.title : '', Validators.minLength(3)),
+      title: new FormControl(blog ? blog.title : '', [
+        Validators.minLength(3),
+        Validators.required
+      ]),
       description: new FormControl(
         blog ? blog.description : '',
         Validators.maxLength(100000)
@@ -64,16 +67,12 @@ export class AddEditBlogComponent implements OnInit {
     });
   }
   
+  // TODO:
+  // add form validator 
 
+  
   save() {
     if (this.form?.valid) {
-      // let fd = new FormData();
-
-
-      
-      console.log(this.form.value);
-      
-
       if (this.blog) {
         this.blogService
           .update_Blog(this.id, this.form.value)
@@ -86,14 +85,11 @@ export class AddEditBlogComponent implements OnInit {
       } else {
         this.blogService.add_blog(this.form.value).subscribe((blog) => {
         console.log(blog);
-        
+
           console.log('added');
           this.router.navigate(['home'])
         });
       }
-
-
-      
     }
   }
 }

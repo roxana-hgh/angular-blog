@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <button type="button" class="btn-close ms-0" (click)="activeModal.dismiss('Cross click')"></button>
+
+    <span class="modal-title float-end">
+       Delete blogs
+    </span>
+</div>
+
+<div class="modal-body">
+    <span>
+       Are you Sure you want to delete These Blogs?
+    </span>
+    <ul class="mt-3">
+        <li *ngFor="let title of deleted_objects_titles">
+            {{ title }}
+        </li>
+    </ul>
+</div>
+
+<div class="modal-footer" style="padding-left: 1.2em">
+    <button class="btn btn-outline-danger" (click)="activeModal.close()">
+       Delete
+    </button>
+</div>

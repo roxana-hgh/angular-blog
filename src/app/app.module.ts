@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +19,7 @@ import { SingleBlogComponent } from './components/single-blog/single-blog.compon
 import { AdminComponent } from './components/admin/admin.component';
 import { AddEditBlogComponent } from './components/admin/add-edit-blog/add-edit-blog.component';
 import { BlogListsComponent } from './components/admin/blog-lists/blog-lists.component';
+import { ConfirmDeleteComponent } from './modals/confirm-delete/confirm-delete.component';
 
 @NgModule({
   declarations: [
@@ -33,11 +34,13 @@ import { BlogListsComponent } from './components/admin/blog-lists/blog-lists.com
     AdminComponent,
     AddEditBlogComponent,
     BlogListsComponent,
+    ConfirmDeleteComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
     NgbModule,
     ReactiveFormsModule,
     FontAwesomeModule
