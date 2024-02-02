@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import {DomSanitizer} from '@angular/platform-browser';
+
+
 
 import { Blog } from 'src/app/interfaces/blog';
 import { BlogsService } from 'src/app/services/blogs.service';
@@ -14,12 +18,24 @@ export class AddEditBlogComponent implements OnInit {
   form!: FormGroup;
   blog!: Blog;
   id!: number;
+  public Editor = DecoupledEditor;
+
+  public onReady( editor: DecoupledEditor ): void {
+    const element = editor.ui.getEditableElement()!;
+    const parent = element.parentElement!;
+
+    parent.insertBefore(
+      editor.ui.view.toolbar.element!,
+      element
+    );
+  }
 
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private blogService: BlogsService
+    private blogService: BlogsService,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {

@@ -65,12 +65,6 @@ export class BlogListsComponent implements OnInit {
     });
   }
 
-  // ToDo:
-  //   get selected id
-  //   get selected title
-  //   delete selected
-  //   show modal base on message
-
   getCheckeds(): any {
     // return: list of blog --> return all blogs which their check prop is equal to true
 
@@ -137,6 +131,11 @@ export class BlogListsComponent implements OnInit {
       this.delete(blog.id)
     })
   }
+
+  //ToDo:
+  // sort blogs
+
+ 
 }
 
 

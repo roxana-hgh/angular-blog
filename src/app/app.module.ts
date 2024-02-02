@@ -7,7 +7,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
+import { SanitizedHtmlPipe } from './pipes/sanitized-html.pipe';
 
 import { HeaderComponent } from './components/header/header.component';
 import { BaseComponent } from './components/base/base.component';
@@ -35,6 +37,7 @@ import { ConfirmDeleteComponent } from './modals/confirm-delete/confirm-delete.c
     AddEditBlogComponent,
     BlogListsComponent,
     ConfirmDeleteComponent,
+    SanitizedHtmlPipe
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,11 @@ import { ConfirmDeleteComponent } from './modals/confirm-delete/confirm-delete.c
     FormsModule,
     NgbModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    CKEditorModule
+  ],
+  exports: [
+    SanitizedHtmlPipe
   ],
   providers: [],
   bootstrap: [AppComponent],

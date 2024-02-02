@@ -19,8 +19,13 @@
             <div class="row mb-3">
                 <label for="descriptionInput" class="col-md-2 col-form-label">Description</label>
                 <div class="col-md-10">
-                    
-                    <textarea class="form-control"rows="10" formControlName="description" id="descriptionInput"></textarea>
+                   
+<div class="border">
+    <ckeditor [editor]="Editor"  formControlName="description" id="descriptionInput" (ready)="onReady($event)" ></ckeditor>
+</div>
+
+
+                  
                 </div>
             </div>
 
@@ -37,15 +42,18 @@
             <button type="submit" [disabled]="form.invalid"  class="btn btn-dark d-block w-25 mt-4 ms-auto">Save</button>
         </form>
     </div>
-    <div class="col-12 col-lg-4 px-3">
-        <h5 class="text-center text-muted mb-2">Preview</h5>
-        <div class="border rounded p-3">
+    <div class="col-12 col-lg-4 p-3">
+        <div class="border rounded px-2 py-1" *ngIf="form.value.title">
+            <small class="text-end text-muted  bg-light rounded-3 py-1 px-2 ">Preview</small>
+        <div class=" p-3">
             <h5 class="text-center mb-3">{{form.value.title}}</h5>
             <img class="w-100 rounded d-block my-3" src="{{form.value.image}}" alt="">
-            <p class="">
-                {{form.value.description}}
-            </p>
+            <div [innerHTML]="form.value.description | sanitizedHtml " ></div>
+            
+           
         </div>
+        </div>
+        
 
     </div>
 
