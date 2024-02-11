@@ -22,6 +22,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { AddEditBlogComponent } from './components/admin/add-edit-blog/add-edit-blog.component';
 import { BlogListsComponent } from './components/admin/blog-lists/blog-lists.component';
 import { ConfirmDeleteComponent } from './modals/confirm-delete/confirm-delete.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ConfirmDeleteComponent } from './modals/confirm-delete/confirm-delete.c
     AdminComponent,
     AddEditBlogComponent,
     BlogListsComponent,
+    SearchComponent,
     ConfirmDeleteComponent,
     SanitizedHtmlPipe
   ],

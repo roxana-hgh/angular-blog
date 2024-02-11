@@ -1,0 +1,13 @@
+<div class="py-5">
+    <div class="search-sec">
+        <div class="mb-1">
+            <input type="text" (input)="searchblogs(search.value)" class="form-control" #search id="search-input" placeholder="Search blogs ...">
+        </div>
+        <div class="border rounded" [ngClass]="searchActive? 'd-block' : 'd-none'">
+            <ul class="list-group list-group-flush rounded">
+                <li class="list-group-item search-result-item" *ngFor="let blog of filteredBlogs"><a class="text-muted " [routerLink]="['/blog',blog.id]"> {{blog.title}}</a></li>
+               
+              </ul>
+        </div>
+    </div>
+</div>
