@@ -1,60 +1,116 @@
 <div class="row">
-   <h2 class="mb-4" *ngIf="blog; else AddNew">Edit "{{blog.title}}"</h2>
-<ng-template #AddNew>
+  <h2 class="mb-4" *ngIf="blog; else AddNew">Edit "{{ blog.title }}"</h2>
+  <ng-template #AddNew>
     <h2 class="mb-4">Add New blog</h2>
-</ng-template>
-    <div class="col-12 col-lg-8 mt-3">
-        <form [formGroup]="form" (ngSubmit)="save()">
-
-            <div class="row mb-3">
-                <label for="" class="col-md-2 col-form-label">title</label>
-                <div class="col-md-10">
-                    
-                    <input   formControlName="title" [ngClass]="{'form-control': true, 'is-invalid': (form.get('title')?.invalid && form.get('title')?.touched)}" type="text" name="" id="">
-                    <small *ngIf="form.get('title')?.errors?.['required'] && form.get('title')?.touched" class="text-danger">title is invalid</small>
-                    <small *ngIf="form.get('title')?.errors?.['minlength'] && form.get('title')?.touched" class="text-danger">title must be up to 3 letters</small>
-                </div>
-            </div>
-          
-            <div class="row mb-3">
-                <label for="descriptionInput" class="col-md-2 col-form-label">Description</label>
-                <div class="col-md-10">
-                   
-<div class="border">
-    <ckeditor [editor]="Editor"  formControlName="description" id="descriptionInput" (ready)="onReady($event)" ></ckeditor>
-</div>
-
-
-                  
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="imageInput" class="col-md-2 col-form-label">Image</label>
-                <div class="col-md-10">
-                    <!-- <input class="form-control" type="file" name="" id="imageInput"> -->
-                    <input class="form-control" formControlName="image" type="text" name="" id="">
-                
-                </div>
-            </div>
-    
-    
-            <button type="submit" [disabled]="form.invalid"  class="btn btn-dark d-block w-25 mt-4 ms-auto">Save</button>
-        </form>
-    </div>
-    <div class="col-12 col-lg-4 p-3">
-        <div class="border rounded px-2 py-1" *ngIf="form.value.title">
-            <small class="text-end text-muted  bg-light rounded-3 py-1 px-2 ">Preview</small>
-        <div class=" p-3">
-            <h5 class="text-center mb-3">{{form.value.title}}</h5>
-            <img class="w-100 rounded d-block my-3" src="{{form.value.image}}" alt="">
-            <div [innerHTML]="form.value.description | sanitizedHtml " ></div>
-            
-           
+  </ng-template>
+  <div class="col-12 col-lg-8 mt-3">
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <div class="row mb-3">
+        <label for="" class="col-md-2 col-form-label">title</label>
+        <div class="col-md-10">
+          <input
+            formControlName="title"
+            [ngClass]="{
+              'form-control': true,
+              'is-invalid':
+                form.get('title')?.invalid && form.get('title')?.touched
+            }"
+            type="text"
+            name=""
+            id=""
+          />
+          <small
+            *ngIf="form.get('title')?.errors?.['required'] && form.get('title')?.touched"
+            class="text-danger"
+            >title is invalid</small
+          >
+          <small
+            *ngIf="form.get('title')?.errors?.['minlength'] && form.get('title')?.touched"
+            class="text-danger"
+            >title must be up to 3 letters</small
+          >
         </div>
+      </div>
+
+      <div class="row mb-3">
+        <label for="descriptionInput" class="col-md-2 col-form-label"
+          >Description</label
+        >
+        <div class="col-md-10">
+          <div class="border">
+            <ckeditor
+              [editor]="Editor"
+              formControlName="description"
+              id="descriptionInput"
+              (ready)="onReady($event)"
+            ></ckeditor>
+          </div>
         </div>
+      </div>
+
+      <div class="row mb-3">
+        <label for="imageInput" class="col-md-2 col-form-label">Image</label>
+        <div class="col-md-10">
+          <!-- <input class="form-control" type="file" name="" id="imageInput"> -->
+          <input
+            class="form-control"
+            formControlName="image"
+            type="text"
+            name=""
+            id=""
+          />
+        </div>
+      </div>
+  
+      
+
+
+      
+
+      <button
+        type="submit"
+        [disabled]="form.invalid"
+        class="btn btn-dark d-block w-25 mt-4 ms-auto"
+      >
+        Save
+      </button>
+    </form>
+
+    <form [formGroup]="tagform">
+      <div class="" formArrayName="tagsArray">
+        <div class="" *ngFor="let tf of Tags.controls; let i = index" >
+          <div class="lesson-form-row" [formGroupName]="i">
+            <input 
+            formControlName="title"
+            placeholder="Tags title">
         
-
+            <button class="delete-btn" (click)="deleteTag(i)">
+                delete</button>
+        </div>
+        </div>
+        <button (click)="addTags()">
+          add
+      </button>
+      </div>
+      <button (click)="saveTags()">
+        save
+    </button>
+    </form>
+  </div>
+  <div class="col-12 col-lg-4 p-3">
+    <div class="border rounded px-2 py-1" *ngIf="form.value.title">
+      <small class="text-end text-muted bg-light rounded-3 py-1 px-2"
+        >Preview</small
+      >
+      <div class="p-3">
+        <h5 class="text-center mb-3">{{ form.value.title }}</h5>
+        <img
+          class="w-100 rounded d-block my-3"
+          src="{{ form.value.image }}"
+          alt=""
+        />
+        <div [innerHTML]="form.value.description | sanitizedHtml"></div>
+      </div>
     </div>
-
+  </div>
 </div>
