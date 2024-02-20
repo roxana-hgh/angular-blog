@@ -66,11 +66,10 @@ export class AddEditBlogComponent implements OnInit {
     if (this.id) {
       this.getBlog(this.id);
       this.formGenerator(this.blog);
-      
-
     } else {
       this.formGenerator(null);
     }
+    this.get_all_tags()
   }
 
   private captureIdFromURL() {
@@ -127,28 +126,6 @@ export class AddEditBlogComponent implements OnInit {
     }
   }
 
-  //   private TagFormGenerator() {
-    
-      
-  //   if (this.tags.length) {
-      
-  //     return this.tags.map((t: Tag) => {
-       
-  //       return new FormGroup({
-  //         id: new FormControl(t.id ? t.id : null),
-  //         title: new FormControl(t.title ? t.title : '')
-  //       });
-       
-  //     });
-  //   } else {
-  //     console.log("empty");
-      
-  //     return [];
-      
-      
-  //   }
-  // }
-  
 
   private formGenerator(blog: Blog | null) {
     
@@ -163,17 +140,13 @@ export class AddEditBlogComponent implements OnInit {
         blog ? blog.description : '',
         Validators.maxLength(100000)
       ),
-        
+       tags: new FormArray([]), 
       image: new FormControl(blog ? blog.image : ''),
       date: new FormControl(blog ? blog.date : new Date()),
     });
    
   }
    
-
-
-  
-  
 
   // TODO:
   // add form validator
@@ -187,17 +160,35 @@ export class AddEditBlogComponent implements OnInit {
 
 
   saveTags(){
-    console.log(this.tagform.value);
-    console.log(this.all_tags);
+   
+    //console.log(this.tagform.value);
+    // console.log(this.all_tags);
+    let all_tags_name = this.all_tags.map((t:any)=>{return t.title})
+    console.log(all_tags_name);
+    this.tagform.value.tagsArray?.forEach((taginput:any) => {
+      if(taginput.id){ this.new_blog_tags.push(taginput.id)}
+      
+      
+      if (! all_tags_name.includes(taginput.title) ){
+       this.TagsService.add_Tag(taginput).subscribe((tag:any)=>{
+        this.new_blog_tags.push(tag.id)
+        console.log(tag);
+        console.log(this.new_blog_tags);
+       })
+        
+      }
+    });
     
-    // this.tagform.value.tagsArray?.forEach((taginput) => {
-
-    //   if (taginput?.id)
-    // });
+    
     
   }
 
   save() {
+    this.form.value.tags = this.new_blog_tags
+    console.log(this.new_blog_tags);
+    console.log(this.form.value);
+    
+    
     if (this.form?.valid) {
       if (this.blog) {
         this.blogService
