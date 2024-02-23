@@ -6,6 +6,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
@@ -47,6 +48,7 @@ import { SearchComponent } from './components/search/search.component';
     HttpClientModule,
     FormsModule,
     NgbModule,
+    NgbPopoverModule,
     ReactiveFormsModule,
     FontAwesomeModule,
     CKEditorModule

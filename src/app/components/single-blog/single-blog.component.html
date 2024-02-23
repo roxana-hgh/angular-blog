@@ -2,10 +2,19 @@
 
 <div class="container">
     <div class="row g-0 py-5 justify-content-between">
-        <div class="col-lg-8  ps-0 ">
+        <div class="col-lg-9  ps-0 ">
+            
+            
             <h1 class="text-center mb-3">{{blog.title}}</h1>
             <img src="{{blog.image}}" class="img-fluid w-100 my-4 d-block mx-auto" alt="">
             <div [innerHTML]="blog.description | sanitizedHtml" class=" mx-auto"></div>
+            <div class="py-2 border-top my-3">
+                <ul class="p-0 m-0 d-flex gap-2">
+                    <li class="badge text-muted "> <fa-icon [icon]="faTag" ></fa-icon> Tags: </li>
+                    <li class="badge bg-light text-muted fw-light " *ngFor="let tag of blog_Tags">{{tag.title}}</li>
+                </ul>
+            </div>
+            
         </div>
         <div class="col-lg-3 p-4 ">
             <app-side></app-side>

@@ -61,11 +61,6 @@
           />
         </div>
       </div>
-  
-      
-
-
-      
 
       <button
         type="submit"
@@ -75,27 +70,36 @@
         Save
       </button>
     </form>
+    <ng-template class="w-100 p-0" let-tagpopup #tagPopupTemplate>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let tag of filter_tags">{{tag.title}}</li>
+       
+      </ul>
+    </ng-template>
+    <div
+      [ngbPopover]="tagPopupTemplate"
+      triggers="manual"
+      #p="ngbPopover"
+      (click)="toggleWithClick(p)"
+      [autoClose]="'outside'"
+      placement="auto"
+      class="cursor-pointer my-3"
+    >
+      <form [formGroup]="tagform">
+        <input class="form-control w-100 " type="text" (keyup)="taginput($event)">
+        <!-- <div class="" formArrayName="tagsArray">
+          <div class="" *ngFor="let tf of Tags.controls; let i = index">
+            <div class="lesson-form-row" [formGroupName]="i">
+              <input formControlName="title" placeholder="Tags title" />
 
-    <form [formGroup]="tagform">
-      <div class="" formArrayName="tagsArray">
-        <div class="" *ngFor="let tf of Tags.controls; let i = index" >
-          <div class="lesson-form-row" [formGroupName]="i">
-            <input 
-            formControlName="title"
-            placeholder="Tags title">
-        
-            <button class="delete-btn" (click)="deleteTag(i)">
-                delete</button>
-        </div>
-        </div>
-        <button (click)="addTags()">
-          add
-      </button>
-      </div>
-      <button (click)="saveTags()">
-        save
-    </button>
-    </form>
+              <button class="delete-btn" (click)="deleteTag(i)">delete</button>
+            </div>
+          </div>
+          <button (click)="addTags()">add</button>
+        </div> -->
+        <button class="btn btn-secondary  my-2" (click)="saveTags()">save</button>
+      </form>
+    </div>
   </div>
   <div class="col-12 col-lg-4 p-3">
     <div class="border rounded px-2 py-1" *ngIf="form.value.title">
