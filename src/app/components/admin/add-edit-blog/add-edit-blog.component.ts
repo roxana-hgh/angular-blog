@@ -16,6 +16,8 @@ import { BlogsService } from 'src/app/services/blogs.service';
 import { TagsService } from 'src/app/services/tags.service';
 import { Tag } from 'src/app/interfaces/tag';
 
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-add-edit-blog',
   templateUrl: './add-edit-blog.component.html',
@@ -23,6 +25,7 @@ import { Tag } from 'src/app/interfaces/tag';
   styleUrls: ['./add-edit-blog.component.css'],
 })
 export class AddEditBlogComponent implements OnInit {
+  faTimes = faTimes
   form!: FormGroup;
   blog!: Blog;
   id!: number;
@@ -33,6 +36,7 @@ export class AddEditBlogComponent implements OnInit {
   new_blog_tags: number[] = [];
   all_tags: Tag[] = [];
   filter_tags: Tag[] = this.all_tags;
+  selectedTag: string = ''
   public Editor = DecoupledEditor;
 
   public onReady(editor: DecoupledEditor): void {
@@ -55,12 +59,22 @@ export class AddEditBlogComponent implements OnInit {
     return this.tagform.controls['tagsArray'] as FormArray;
   }
 
-  addTags() {
-    const Tag_Form = this.fb.group({
-      id: [null],
-      title: ['', Validators.required],
-    });
-    this.Tags.push(Tag_Form);
+  addTags(tag:any | null) {
+    if(tag){
+      const Tag_Form = this.fb.group({
+        id: [null],
+        title: [tag, Validators.required],
+      });
+      this.Tags.push(Tag_Form);
+    }else {
+      const Tag_Form = this.fb.group({
+        id: [null],
+        title: ['', Validators.required],
+      });
+      this.Tags.push(Tag_Form);
+    }
+  
+    
   }
 
   deleteTag(lessonIndex: number) {
@@ -170,9 +184,11 @@ export class AddEditBlogComponent implements OnInit {
 
       if (!all_tags_name.includes(taginput.title)) {
         this.TagsService.add_Tag(taginput).subscribe((tag: any) => {
-          console.log('new');
+          
 
           this.new_blog_tags.push(tag.id);
+          console.log("newtag");
+          
         });
       } else if (all_tags_name.includes(taginput.title)) {
         let existed_tag = this.all_tags.find(
@@ -181,6 +197,7 @@ export class AddEditBlogComponent implements OnInit {
 
         if (existed_tag) {
           this.new_blog_tags.push(existed_tag);
+          console.log("newtag");
         }
       }
     });
@@ -190,6 +207,15 @@ export class AddEditBlogComponent implements OnInit {
     this.filter_tags = this.all_tags.filter((tag: any) =>
       tag.title.includes((e.target as HTMLInputElement).value)
     );
+  }
+
+  selectTag(t:any){
+    this.selectedTag = t.title
+  }
+  addTagToList(){
+    this.addTags(this.selectedTag)
+    this.selectedTag = ''
+    this.saveTags()
   }
 
   toggleWithClick(popover: any) {

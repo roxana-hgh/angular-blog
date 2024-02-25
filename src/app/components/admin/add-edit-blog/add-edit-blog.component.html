@@ -72,8 +72,9 @@
     </form>
     <ng-template class="w-100 p-0" let-tagpopup #tagPopupTemplate>
       <ul class="list-group">
-        <li class="list-group-item" *ngFor="let tag of filter_tags">{{tag.title}}</li>
-       
+        <li class="list-group-item" *ngFor="let tag of filter_tags" (click)="selectTag(tag)">
+          {{ tag.title }}
+        </li>
       </ul>
     </ng-template>
     <div
@@ -85,21 +86,44 @@
       placement="auto"
       class="cursor-pointer my-3"
     >
-      <form [formGroup]="tagform">
-        <input class="form-control w-100 " type="text" (keyup)="taginput($event)">
-        <!-- <div class="" formArrayName="tagsArray">
-          <div class="" *ngFor="let tf of Tags.controls; let i = index">
-            <div class="lesson-form-row" [formGroupName]="i">
-              <input formControlName="title" placeholder="Tags title" />
 
-              <button class="delete-btn" (click)="deleteTag(i)">delete</button>
-            </div>
-          </div>
-          <button (click)="addTags()">add</button>
-        </div> -->
-        <button class="btn btn-secondary  my-2" (click)="saveTags()">save</button>
-      </form>
+    <form  (ngSubmit)="addTagToList()">
+      <input
+        class="form-control w-100"
+        type="text"
+        [(ngModel)]="selectedTag"name="inputTag"
+        (keyup)="taginput($event)"
+      />
+    </form>
+      
     </div>
+    <form [formGroup]="tagform">
+      <div
+        class="d-flex flex-wrap justify-content-start gap-2 my-1 py-2"
+        formArrayName="tagsArray"
+      >
+        <div
+          class="tagItem d-block"
+          *ngFor="let tf of Tags.controls; let i = index"
+        >
+          <div class="d-flex" [formGroupName]="i">
+            <input
+              [size]="tagItem.value.length"
+              #tagItem
+              readonly
+              formControlName="title"
+              class="border-0 selectedTagInput outline-0"
+            />
+
+            <button class="delete-tag-btn btn" (click)="deleteTag(i)">
+              <fa-icon [icon]="faTimes"></fa-icon>
+            </button>
+          </div>
+        </div>
+        <!-- <button (click)="addTags()">add</button> -->
+      </div>
+      <!-- <button class="btn btn-dark  my-2" (click)="saveTags()">save Tags</button> -->
+    </form>
   </div>
   <div class="col-12 col-lg-4 p-3">
     <div class="border rounded px-2 py-1" *ngIf="form.value.title">
