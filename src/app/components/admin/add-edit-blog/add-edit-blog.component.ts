@@ -25,7 +25,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./add-edit-blog.component.css'],
 })
 export class AddEditBlogComponent implements OnInit {
-  faTimes = faTimes
+  faTimes = faTimes;
   form!: FormGroup;
   blog!: Blog;
   id!: number;
@@ -36,7 +36,7 @@ export class AddEditBlogComponent implements OnInit {
   new_blog_tags: number[] = [];
   all_tags: Tag[] = [];
   filter_tags: Tag[] = this.all_tags;
-  selectedTag: string = ''
+  selectedTag: string = '';
   public Editor = DecoupledEditor;
 
   public onReady(editor: DecoupledEditor): void {
@@ -59,26 +59,40 @@ export class AddEditBlogComponent implements OnInit {
     return this.tagform.controls['tagsArray'] as FormArray;
   }
 
-  addTags(tag:any | null) {
-    if(tag){
+  // addTags(tag: any | null) {
+  //   if (tag) {
+  //     const Tag_Form = this.fb.group({
+  //       id: [null],
+  //       title: [tag, Validators.required],
+  //     });
+  //     this.Tags.push(Tag_Form);
+  //   } else {
+  //     const Tag_Form = this.fb.group({
+  //       id: [null],
+  //       title: ['', Validators.required],
+  //     });
+  //     this.Tags.push(Tag_Form);
+  //   }
+  // }
+
+  addTagToForm(tag: Tag | null) {
+    if (tag) {
       const Tag_Form = this.fb.group({
-        id: [null],
-        title: [tag, Validators.required],
+        id: [tag.id],
+        title: [tag.title, Validators.required],
       });
-      this.Tags.push(Tag_Form);
-    }else {
+      return Tag_Form
+    } else {
       const Tag_Form = this.fb.group({
         id: [null],
         title: ['', Validators.required],
       });
-      this.Tags.push(Tag_Form);
+      return Tag_Form
     }
-  
-    
   }
 
-  deleteTag(lessonIndex: number) {
-    this.Tags.removeAt(lessonIndex);
+  deleteTag(TagIndex: number) {
+    this.Tags.removeAt(TagIndex);
   }
 
   ngOnInit(): void {
@@ -101,24 +115,24 @@ export class AddEditBlogComponent implements OnInit {
     this.blogService.get_blog(id).subscribe((blog) => {
       if (blog) {
         this.blog = blog;
-        this.getBlogTags();
+        //this.getBlogTags();
         this.formGenerator(this.blog);
         this.TagFormGenerator(this.blog);
       }
     });
   }
 
-  private gettagByid(id: number) {
-    this.TagsService.get_Tag(id).subscribe((tag: Tag) => {
-      this.blog_tags.push({ id: tag.id, title: tag.title });
-    });
-  }
+  // private gettagByid(id: number) {
+  //   this.TagsService.get_Tag(id).subscribe((tag: Tag) => {
+  //     this.blog_tags.push({ id: tag.id, title: tag.title });
+  //   });
+  // }
 
-  private getBlogTags() {
-    this.blog?.tags?.forEach((tag_id) => {
-      this.gettagByid(tag_id);
-    });
-  }
+  // private getBlogTags() {
+  //   this.blog?.tags?.forEach((tag_id) => {
+  //     this.gettagByid(tag_id);
+  //   });
+  // }
 
   private TagFormGenerator(model: Blog | null) {
     if (model != null && model.tags) {
@@ -127,11 +141,13 @@ export class AddEditBlogComponent implements OnInit {
         // Log each tag for debugging
         this.TagsService.get_Tag(t).subscribe((tag: Tag) => {
           console.log('Tag:', tag);
-          let TagsForm = this.fb.group({
-            id: [tag.id],
-            title: [tag.title],
-          });
-          this.Tags.push(TagsForm);
+          // let TagsForm = this.fb.group({
+          //   id: [tag.id],
+          //   title: [tag.title],
+          // });
+          this.Tags.push(this.addTagToForm(tag));
+         
+          
         });
       });
     } else {
@@ -141,6 +157,7 @@ export class AddEditBlogComponent implements OnInit {
       });
       this.Tags.push(TagsForm);
     }
+    console.log("Tags", this.Tags)
   }
 
   private formGenerator(blog: Blog | null) {
@@ -160,8 +177,7 @@ export class AddEditBlogComponent implements OnInit {
     });
   }
 
-  // TODO:
-  // add form validator
+ 
 
   get_all_tags() {
     this.TagsService.get_all_Tags().subscribe((tags) => {
@@ -170,38 +186,32 @@ export class AddEditBlogComponent implements OnInit {
     });
   }
 
-  saveTags() {
-    //console.log(this.tagform.value);
-    // console.log(this.all_tags);
-    let all_tags_name = this.all_tags.map((t: any) => {
-      return t.title;
-    });
-    console.log(all_tags_name);
-    this.tagform.value.tagsArray?.forEach((taginput: any) => {
-      if (taginput.id) {
-        this.new_blog_tags.push(taginput.id);
-      }
+  // saveTags() {
+  //   //console.log(this.tagform.value);
+  //   // console.log(this.all_tags);
+  //   let all_tags_name = this.all_tags.map((t: any) => {
+  //     return t.title;
+  //   });
 
-      if (!all_tags_name.includes(taginput.title)) {
-        this.TagsService.add_Tag(taginput).subscribe((tag: any) => {
-          
+  //  let taginput:any =  this.tagform.value.tagsArray?.at(-1)
+   
 
-          this.new_blog_tags.push(tag.id);
-          console.log("newtag");
-          
-        });
-      } else if (all_tags_name.includes(taginput.title)) {
-        let existed_tag = this.all_tags.find(
-          (t) => t.title === taginput.title
-        )?.id;
+  //     if (!all_tags_name.includes(taginput.title)) {
+  //       this.TagsService.add_Tag(taginput).subscribe((t: any) => {
+  //         this.new_blog_tags.push(t.id);
+  //         console.log('newtag added with service');
+  //       });
+  //     } else {
+  //       let existed_tag = this.all_tags.find(
+  //         (t) => t.title === taginput.title
+  //       )?.id;
 
-        if (existed_tag) {
-          this.new_blog_tags.push(existed_tag);
-          console.log("newtag");
-        }
-      }
-    });
-  }
+  //       if (existed_tag) {
+  //         this.new_blog_tags.push(existed_tag);
+  //         console.log('existed tag pushed');
+  //       }
+  //     }
+  // }
 
   taginput(e: Event) {
     this.filter_tags = this.all_tags.filter((tag: any) =>
@@ -209,13 +219,35 @@ export class AddEditBlogComponent implements OnInit {
     );
   }
 
-  selectTag(t:any){
-    this.selectedTag = t.title
+  selectTag(t: any) {
+    this.selectedTag = t.title;
   }
-  addTagToList(){
-    this.addTags(this.selectedTag)
-    this.selectedTag = ''
-    this.saveTags()
+  addTagToList() {
+    // this.addTags(this.selectedTag);
+    // this.selectedTag = '';
+    // this.saveTags();
+    let all_tags_name = this.all_tags.map((t: any) => {
+      return t.title;
+    });
+
+    let taginput:any =  this.selectedTag
+    if (!all_tags_name.includes(taginput)) {
+      this.TagsService.add_Tag({id: null, title: taginput}).subscribe((t: any) => {
+        this.Tags.push(this.addTagToForm(t));
+        
+        console.log('newtag added with service', t);
+      });
+    }else {
+      let existed_tag = this.all_tags.find(
+        (t) => t.title === taginput
+      );
+
+      if (existed_tag) {
+        this.Tags.push(this.addTagToForm(existed_tag));
+        console.log('existed tag pushed', existed_tag);
+      }
+    }
+    this.selectedTag = '';
   }
 
   toggleWithClick(popover: any) {
@@ -225,9 +257,10 @@ export class AddEditBlogComponent implements OnInit {
   }
 
   save() {
-    this.form.value.tags = this.new_blog_tags;
-    console.log(this.new_blog_tags);
-    console.log(this.form.value);
+    
+    this.form.value.tags = this.Tags.value.map((tag: Tag) =>  tag.id );
+    // console.log(this.form.value.tags);
+    // console.log(this.form.value);
 
     if (this.form?.valid) {
       if (this.blog) {
@@ -249,3 +282,8 @@ export class AddEditBlogComponent implements OnInit {
     }
   }
 }
+
+ // TODO:
+ // add loader and toast to add tag
+ // when the blog has no tags an enpty form array readonly input will displayS
+  // add form validator
