@@ -6,7 +6,7 @@
   <div class="col-12 col-lg-8 mt-3">
     <form [formGroup]="form" (ngSubmit)="save()">
       <div class="row mb-3">
-        <label for="" class="col-md-2 col-form-label">title</label>
+        <label for="" class="col-md-2 col-form-label fw-bold">title</label>
         <div class="col-md-10">
           <input
             formControlName="title"
@@ -33,7 +33,7 @@
       </div>
 
       <div class="row mb-3">
-        <label for="descriptionInput" class="col-md-2 col-form-label"
+        <label for="descriptionInput" class="col-md-2 col-form-label fw-bold"
           >Description</label
         >
         <div class="col-md-10">
@@ -49,7 +49,9 @@
       </div>
 
       <div class="row mb-3">
-        <label for="imageInput" class="col-md-2 col-form-label">Image</label>
+        <label for="imageInput" class="col-md-2 col-form-label fw-bold"
+          >Image</label
+        >
         <div class="col-md-10">
           <!-- <input class="form-control" type="file" name="" id="imageInput"> -->
           <input
@@ -62,68 +64,88 @@
         </div>
       </div>
 
+      <div class="border rounded my-3 position-relative">
+        <div class="w-100 h-100 p-0" #tagsLoader *ngIf="loader">
+          <div
+            class="d-flex justify-content-center align-items-center tagsLoader"
+          >
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
+        <div class="p-2">
+          <label class="fw-bold px-2" for="taginput-sec">Tags</label>
+          <ng-template class="w-100 p-0" let-tagpopup #tagPopupTemplate>
+            <ul class="list-group">
+              <li
+                class="list-group-item"
+                *ngFor="let tag of filter_tags"
+                (click)="selectTag(tag)"
+              >
+                {{ tag.title }}
+              </li>
+            </ul>
+          </ng-template>
+          <div
+            [ngbPopover]="tagPopupTemplate"
+            triggers="manual"
+            #p="ngbPopover"
+            (click)="toggleWithClick(p)"
+            [autoClose]="'outside'"
+            placement="top"
+            [popoverClass]="'tag-popover'"
+            class="cursor-pointer my-3"
+          >
+            <form (ngSubmit)="addTagToList($event)">
+              <input
+                class="form-control w-100"
+                type="text"
+                autocomplete="off"
+                id="taginput-sec"
+                [(ngModel)]="selectedTag"
+                name="inputTag"
+                (keyup)="taginput($event)"
+              />
+            </form>
+          </div>
+          <form (submit)="$event.stopPropagation()" [formGroup]="tagform">
+            <div
+              class="d-flex flex-wrap justify-content-start gap-2 my-1 py-2"
+              formArrayName="tagsArray"
+            >
+              <div
+                class="tagItem d-block"
+                *ngFor="let tf of Tags.controls; let i = index"
+              >
+                <div class="d-flex" [formGroupName]="i">
+                  <input
+                    [size]="tagItem.value.length"
+                    #tagItem
+                    readonly
+                    formControlName="title"
+                    class="border-0 selectedTagInput outline-0"
+                  />
+
+                  <button class="delete-tag-btn btn" (click)="deleteTag(i)">
+                    <fa-icon [icon]="faTimes"></fa-icon>
+                  </button>
+                </div>
+              </div>
+              <!-- <button (click)="addTags()">add</button> -->
+            </div>
+            <!-- <button class="btn btn-dark  my-2" (click)="saveTags()">save Tags</button> -->
+          </form>
+        </div>
+      </div>
+
       <button
         type="submit"
-        [disabled]="form.invalid"
+        [disabled]="form.invalid || loader"
         class="btn btn-dark d-block w-25 mt-4 ms-auto"
       >
         Save
       </button>
-    </form>
-    <ng-template class="w-100 p-0" let-tagpopup #tagPopupTemplate>
-      <ul class="list-group">
-        <li class="list-group-item" *ngFor="let tag of filter_tags" (click)="selectTag(tag)">
-          {{ tag.title }}
-        </li>
-      </ul>
-    </ng-template>
-    <div
-      [ngbPopover]="tagPopupTemplate"
-      triggers="manual"
-      #p="ngbPopover"
-      (click)="toggleWithClick(p)"
-      [autoClose]="'outside'"
-      placement="auto"
-      class="cursor-pointer my-3"
-    >
-
-    <form  (ngSubmit)="addTagToList()">
-      <input
-        class="form-control w-100"
-        type="text"
-        [(ngModel)]="selectedTag"name="inputTag"
-        (keyup)="taginput($event)"
-      />
-    </form>
-      
-    </div>
-    <form [formGroup]="tagform">
-      <div
-        class="d-flex flex-wrap justify-content-start gap-2 my-1 py-2"
-        formArrayName="tagsArray"
-      >
-        <div
-          class="tagItem d-block"
-          *ngFor="let tf of Tags.controls; let i = index"
-        >
-          <div class="d-flex" [formGroupName]="i">
-            <input
-              [size]="tagItem.value.length"
-              #tagItem
-              readonly
-              formControlName="title"
-              class="border-0 selectedTagInput outline-0"
-              
-            />
-
-            <button class="delete-tag-btn btn" (click)="deleteTag(i)">
-              <fa-icon [icon]="faTimes"></fa-icon>
-            </button>
-          </div>
-        </div>
-        <!-- <button (click)="addTags()">add</button> -->
-      </div>
-      <!-- <button class="btn btn-dark  my-2" (click)="saveTags()">save Tags</button> -->
     </form>
   </div>
   <div class="col-12 col-lg-4 p-3">
@@ -143,3 +165,10 @@
     </div>
   </div>
 </div>
+
+<app-toast
+  [show]="toast"
+  [autohide]="true"
+  [delay]="2500"
+  [message]="'Tag Added!'"
+></app-toast>

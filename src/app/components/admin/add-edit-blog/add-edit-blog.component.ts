@@ -25,6 +25,8 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./add-edit-blog.component.css'],
 })
 export class AddEditBlogComponent implements OnInit {
+  loader: boolean = false;
+  toast: boolean = false;
   faTimes = faTimes;
   form!: FormGroup;
   blog!: Blog;
@@ -81,13 +83,13 @@ export class AddEditBlogComponent implements OnInit {
         id: [tag.id],
         title: [tag.title, Validators.required],
       });
-      return Tag_Form
+      return Tag_Form;
     } else {
       const Tag_Form = this.fb.group({
         id: [null],
         title: ['', Validators.required],
       });
-      return Tag_Form
+      return Tag_Form;
     }
   }
 
@@ -146,8 +148,6 @@ export class AddEditBlogComponent implements OnInit {
           //   title: [tag.title],
           // });
           this.Tags.push(this.addTagToForm(tag));
-         
-          
         });
       });
     } else {
@@ -157,7 +157,7 @@ export class AddEditBlogComponent implements OnInit {
       });
       this.Tags.push(TagsForm);
     }
-    console.log("Tags", this.Tags)
+    console.log('Tags', this.Tags);
   }
 
   private formGenerator(blog: Blog | null) {
@@ -177,8 +177,6 @@ export class AddEditBlogComponent implements OnInit {
     });
   }
 
- 
-
   get_all_tags() {
     this.TagsService.get_all_Tags().subscribe((tags) => {
       this.all_tags = tags;
@@ -194,7 +192,6 @@ export class AddEditBlogComponent implements OnInit {
   //   });
 
   //  let taginput:any =  this.tagform.value.tagsArray?.at(-1)
-   
 
   //     if (!all_tags_name.includes(taginput.title)) {
   //       this.TagsService.add_Tag(taginput).subscribe((t: any) => {
@@ -222,25 +219,28 @@ export class AddEditBlogComponent implements OnInit {
   selectTag(t: any) {
     this.selectedTag = t.title;
   }
-  addTagToList() {
+  addTagToList(e:Event) {
     // this.addTags(this.selectedTag);
     // this.selectedTag = '';
     // this.saveTags();
+    e.stopPropagation()
     let all_tags_name = this.all_tags.map((t: any) => {
       return t.title;
     });
 
-    let taginput:any =  this.selectedTag
+    let taginput: any = this.selectedTag;
     if (!all_tags_name.includes(taginput)) {
-      this.TagsService.add_Tag({id: null, title: taginput}).subscribe((t: any) => {
-        this.Tags.push(this.addTagToForm(t));
-        
-        console.log('newtag added with service', t);
-      });
-    }else {
-      let existed_tag = this.all_tags.find(
-        (t) => t.title === taginput
+      this.loader = true;
+      this.TagsService.add_Tag({ id: null, title: taginput }).subscribe(
+        (t: any) => {
+          this.Tags.push(this.addTagToForm(t));
+          this.loader = false;
+          this.toast = true;
+          console.log('newtag added with service', t);
+        }
       );
+    } else {
+      let existed_tag = this.all_tags.find((t) => t.title === taginput);
 
       if (existed_tag) {
         this.Tags.push(this.addTagToForm(existed_tag));
@@ -257,8 +257,7 @@ export class AddEditBlogComponent implements OnInit {
   }
 
   save() {
-    
-    this.form.value.tags = this.Tags.value.map((tag: Tag) =>  tag.id );
+    this.form.value.tags = this.Tags.value.map((tag: Tag) => tag.id);
     // console.log(this.form.value.tags);
     // console.log(this.form.value);
 
@@ -283,7 +282,7 @@ export class AddEditBlogComponent implements OnInit {
   }
 }
 
- // TODO:
- // add loader and toast to add tag
- // when the blog has no tags an enpty form array readonly input will displayS
-  // add form validator
+// TODO:
+// display popover when at least one suggestion exist
+// when the blog has no tags an enpty form array readonly input will displayS
+// add form validator

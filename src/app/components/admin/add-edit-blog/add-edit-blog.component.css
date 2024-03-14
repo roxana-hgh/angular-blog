@@ -28,3 +28,12 @@ input.selectedTagInput{
     padding: 0;
 
 }
+
+.tagsLoader {
+    background-color: #f8f8f8a5;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+}
+

@@ -11,7 +11,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import { SanitizedHtmlPipe } from './pipes/sanitized-html.pipe';
-
+import { ToastComponent } from './components/shared/toast/toast.component';
 import { HeaderComponent } from './components/header/header.component';
 import { BaseComponent } from './components/base/base.component';
 import { HomeComponent } from './components/home/home.component';
@@ -51,7 +51,8 @@ import { SearchComponent } from './components/search/search.component';
     NgbPopoverModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    CKEditorModule
+    CKEditorModule,
+    ToastComponent
   ],
   exports: [
     SanitizedHtmlPipe

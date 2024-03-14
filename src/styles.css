@@ -8,3 +8,9 @@
 * {
     box-sizing: border-box;
 }
+
+.tag-popover {
+    width: 100%;
+    max-height: 12em;
+    overflow-y: scroll;
+}
