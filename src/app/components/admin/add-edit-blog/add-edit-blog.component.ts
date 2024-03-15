@@ -61,22 +61,6 @@ export class AddEditBlogComponent implements OnInit {
     return this.tagform.controls['tagsArray'] as FormArray;
   }
 
-  // addTags(tag: any | null) {
-  //   if (tag) {
-  //     const Tag_Form = this.fb.group({
-  //       id: [null],
-  //       title: [tag, Validators.required],
-  //     });
-  //     this.Tags.push(Tag_Form);
-  //   } else {
-  //     const Tag_Form = this.fb.group({
-  //       id: [null],
-  //       title: ['', Validators.required],
-  //     });
-  //     this.Tags.push(Tag_Form);
-  //   }
-  // }
-
   addTagToForm(tag: Tag | null) {
     if (tag) {
       const Tag_Form = this.fb.group({
@@ -124,17 +108,6 @@ export class AddEditBlogComponent implements OnInit {
     });
   }
 
-  // private gettagByid(id: number) {
-  //   this.TagsService.get_Tag(id).subscribe((tag: Tag) => {
-  //     this.blog_tags.push({ id: tag.id, title: tag.title });
-  //   });
-  // }
-
-  // private getBlogTags() {
-  //   this.blog?.tags?.forEach((tag_id) => {
-  //     this.gettagByid(tag_id);
-  //   });
-  // }
 
   private TagFormGenerator(model: Blog | null) {
     if (model != null && model.tags) {
@@ -143,10 +116,7 @@ export class AddEditBlogComponent implements OnInit {
         // Log each tag for debugging
         this.TagsService.get_Tag(t).subscribe((tag: Tag) => {
           console.log('Tag:', tag);
-          // let TagsForm = this.fb.group({
-          //   id: [tag.id],
-          //   title: [tag.title],
-          // });
+       
           this.Tags.push(this.addTagToForm(tag));
         });
       });
@@ -184,31 +154,7 @@ export class AddEditBlogComponent implements OnInit {
     });
   }
 
-  // saveTags() {
-  //   //console.log(this.tagform.value);
-  //   // console.log(this.all_tags);
-  //   let all_tags_name = this.all_tags.map((t: any) => {
-  //     return t.title;
-  //   });
 
-  //  let taginput:any =  this.tagform.value.tagsArray?.at(-1)
-
-  //     if (!all_tags_name.includes(taginput.title)) {
-  //       this.TagsService.add_Tag(taginput).subscribe((t: any) => {
-  //         this.new_blog_tags.push(t.id);
-  //         console.log('newtag added with service');
-  //       });
-  //     } else {
-  //       let existed_tag = this.all_tags.find(
-  //         (t) => t.title === taginput.title
-  //       )?.id;
-
-  //       if (existed_tag) {
-  //         this.new_blog_tags.push(existed_tag);
-  //         console.log('existed tag pushed');
-  //       }
-  //     }
-  // }
 
   taginput(e: Event) {
     this.filter_tags = this.all_tags.filter((tag: any) =>
@@ -220,9 +166,7 @@ export class AddEditBlogComponent implements OnInit {
     this.selectedTag = t.title;
   }
   addTagToList(e:Event) {
-    // this.addTags(this.selectedTag);
-    // this.selectedTag = '';
-    // this.saveTags();
+  
     e.stopPropagation()
     let all_tags_name = this.all_tags.map((t: any) => {
       return t.title;
@@ -256,10 +200,24 @@ export class AddEditBlogComponent implements OnInit {
     }, 200);
   }
 
+  onFileChange(event: any) {
+    const reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.form.patchValue({
+          image: reader.result
+        });
+      };
+    }
+  }
+
   save() {
     this.form.value.tags = this.Tags.value.map((tag: Tag) => tag.id);
-    // console.log(this.form.value.tags);
-    // console.log(this.form.value);
+   
 
     if (this.form?.valid) {
       if (this.blog) {
