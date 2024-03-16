@@ -6,9 +6,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
-
+import { SanitizedHtmlPipe } from './pipes/sanitized-html.pipe';
+import { ToastComponent } from './components/shared/toast/toast.component';
 import { HeaderComponent } from './components/header/header.component';
 import { BaseComponent } from './components/base/base.component';
 import { HomeComponent } from './components/home/home.component';
@@ -20,6 +23,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { AddEditBlogComponent } from './components/admin/add-edit-blog/add-edit-blog.component';
 import { BlogListsComponent } from './components/admin/blog-lists/blog-lists.component';
 import { ConfirmDeleteComponent } from './modals/confirm-delete/confirm-delete.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +38,9 @@ import { ConfirmDeleteComponent } from './modals/confirm-delete/confirm-delete.c
     AdminComponent,
     AddEditBlogComponent,
     BlogListsComponent,
+    SearchComponent,
     ConfirmDeleteComponent,
+    SanitizedHtmlPipe
   ],
   imports: [
     BrowserModule,
@@ -42,8 +48,14 @@ import { ConfirmDeleteComponent } from './modals/confirm-delete/confirm-delete.c
     HttpClientModule,
     FormsModule,
     NgbModule,
+    NgbPopoverModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    CKEditorModule,
+    ToastComponent
+  ],
+  exports: [
+    SanitizedHtmlPipe
   ],
   providers: [],
   bootstrap: [AppComponent],

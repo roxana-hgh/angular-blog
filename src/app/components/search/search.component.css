@@ -1,0 +1,9 @@
+.search-result-item a {
+    text-decoration:  none;
+
+}
+
+.search-result-item:hover  {
+    background-color: #f8f8f8;
+
+}

@@ -4,7 +4,7 @@
             alt="" class="card-img-top" width="700" height="200">
         <div class="card-body">
             <h5 class="card-title">{{blog.title}}</h5>
-            <p class="card-text">{{blog.description}}</p>
+            <p [innerHTML]="blog.description" class="card-text"></p>
             <a [routerLink]="['/blog',blog.id]" class="btn btn-dark btn-sm">Read More</a>
 
         </div>

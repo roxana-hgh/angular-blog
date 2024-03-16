@@ -7,8 +7,8 @@
     </div>
 
       
-        <button type="button" class="btn btn-outline-secondary">Sort: A-Z</button>
-        <button type="button" class="btn btn-outline-secondary ">Sort: Z-A</button>
+        <button type="button" (click)="sortAtoZ()" [ngClass]="{active: sortAZ}" class="btn btn-outline-secondary">Sort: A-Z</button>
+        <button type="button" (click)="sortZtoA()" [ngClass]="{active: sortZA}" class="btn btn-outline-secondary ">Sort: Z-A</button>
         <button *ngIf="checkedCount() > 0" type="button" (click)="openConfirmDeleteModal()" class="btn btn-outline-danger">Delete</button>
 
    </div>
@@ -46,6 +46,6 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" (click)="modal.close('Save click')">Cancel</button>
-        <button type="button" class="btn btn-danger">Yes</button>
+        <button type="button" class="btn btn-danger" >Yes</button>
     </div>
 </ng-template>

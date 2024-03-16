@@ -1,52 +1,168 @@
-<div class="row">
-   <h2 class="mb-4" *ngIf="blog; else AddNew">Edit "{{blog.title}}"</h2>
-<ng-template #AddNew>
-    <h2 class="mb-4">Add New blog</h2>
-</ng-template>
+<form [formGroup]="form" (ngSubmit)="save()">
+  <div class="header d-flex justify-content-between  align-items-center mb-4 py-2 ">
+    <div class="title">
+      <h2 class="" *ngIf="blog; else AddNew">Edit "{{ blog.title }}"</h2>
+      <ng-template #AddNew>
+        <h2 class="">Add New blog</h2>
+      </ng-template>
+    </div>
+    <button
+      type="submit"
+      [disabled]="form.invalid || loader"
+      class="btn btn-success d-block px-5"
+    >
+      Save
+    </button>
+  </div>
+  <div class="row form-row">
     <div class="col-12 col-lg-8 mt-3">
-        <form [formGroup]="form" (ngSubmit)="save()">
-
-            <div class="row mb-3">
-                <label for="" class="col-md-2 col-form-label">title</label>
-                <div class="col-md-10">
-                    
-                    <input   formControlName="title" [ngClass]="{'form-control': true, 'is-invalid': (form.get('title')?.invalid && form.get('title')?.touched)}" type="text" name="" id="">
-                    <small *ngIf="form.get('title')?.errors?.['required'] && form.get('title')?.touched" class="text-danger">title is invalid</small>
-                    <small *ngIf="form.get('title')?.errors?.['minlength'] && form.get('title')?.touched" class="text-danger">title must be up to 3 letters</small>
-                </div>
-            </div>
-          
-            <div class="row mb-3">
-                <label for="descriptionInput" class="col-md-2 col-form-label">Description</label>
-                <div class="col-md-10">
-                    
-                    <textarea class="form-control"rows="10" formControlName="description" id="descriptionInput"></textarea>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="imageInput" class="col-md-2 col-form-label">Image</label>
-                <div class="col-md-10">
-                    <!-- <input class="form-control" type="file" name="" id="imageInput"> -->
-                    <input class="form-control" formControlName="image" type="text" name="" id="">
-                
-                </div>
-            </div>
-    
-    
-            <button type="submit" [disabled]="form.invalid"  class="btn btn-dark d-block w-25 mt-4 ms-auto">Save</button>
-        </form>
-    </div>
-    <div class="col-12 col-lg-4 px-3">
-        <h5 class="text-center text-muted mb-2">Preview</h5>
-        <div class="border rounded p-3">
-            <h5 class="text-center mb-3">{{form.value.title}}</h5>
-            <img class="w-100 rounded d-block my-3" src="{{form.value.image}}" alt="">
-            <p class="">
-                {{form.value.description}}
-            </p>
+      <div class="row mb-3">
+        <label for="" class="col-md-2 col-form-label fw-bold">title</label>
+        <div class="col-md-10">
+          <input
+            formControlName="title"
+            [ngClass]="{
+              'form-control': true,
+              'is-invalid':
+                form.get('title')?.invalid && form.get('title')?.touched
+            }"
+            type="text"
+            name=""
+            id=""
+          />
+          <small
+            *ngIf="form.get('title')?.errors?.['required'] && form.get('title')?.touched"
+            class="text-danger"
+            >title is invalid</small
+          >
+          <small
+            *ngIf="form.get('title')?.errors?.['minlength'] && form.get('title')?.touched"
+            class="text-danger"
+            >title must be up to 3 letters</small
+          >
         </div>
+      </div>
 
+      <div class="row mb-3">
+        <label for="descriptionInput" class="col-md-2 col-form-label fw-bold"
+          >Description</label
+        >
+        <div class="col-md-10">
+          <div class="border">
+            <ckeditor
+              [editor]="Editor"
+              formControlName="description"
+              id="descriptionInput"
+              (ready)="onReady($event)"
+            ></ckeditor>
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="col-12 col-lg-4 p-3">
+      <div class="border rounded px-2 py-1" *ngIf="form.value.title">
+        <div class="p-2">
+          <label for="imageInput" class="col-form-label fw-bold">Image</label>
 
-</div>
+          <img
+            class="w-100 rounded d-block my-2"
+            src="{{ form.value.image }}"
+            alt=""
+          />
+          <div class="">
+            <!-- <input class="form-control" type="file" name="" id="imageInput"> -->
+            <input
+              class="form-control"
+              formControlName="image"
+              type="file"
+              name=""
+              id=""
+              (change)="onFileChange($event)"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="border rounded my-3 position-relative">
+        <div class="w-100 h-100 p-0" #tagsLoader *ngIf="loader">
+          <div
+            class="d-flex justify-content-center align-items-center tagsLoader"
+          >
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
+        <div class="p-2">
+          <label class="fw-bold px-2" for="taginput-sec">Tags</label>
+          <ng-template class="w-100 p-0" let-tagpopup #tagPopupTemplate>
+            <ul class="list-group">
+              <li
+                class="list-group-item"
+                *ngFor="let tag of filter_tags"
+                (click)="selectTag(tag)"
+              >
+                {{ tag.title }}
+              </li>
+            </ul>
+          </ng-template>
+          <div
+            [ngbPopover]="tagPopupTemplate"
+            triggers="manual"
+            #p="ngbPopover"
+            (click)="toggleWithClick(p)"
+            [autoClose]="'outside'"
+            placement="top"
+            [popoverClass]="'tag-popover'"
+            class="cursor-pointer my-3"
+          >
+            <form (ngSubmit)="addTagToList($event)">
+              <input
+                class="form-control w-100"
+                type="text"
+                autocomplete="off"
+                id="taginput-sec"
+                [(ngModel)]="selectedTag"
+                name="inputTag"
+                (keyup)="taginput($event)"
+              />
+            </form>
+          </div>
+          <form (submit)="$event.stopPropagation()" [formGroup]="tagform">
+            <div
+              class="d-flex flex-wrap justify-content-start gap-2 my-1 py-2"
+              formArrayName="tagsArray"
+            >
+              <div
+                class="tagItem d-block"
+                *ngFor="let tf of Tags.controls; let i = index"
+              >
+                <div class="d-flex" [formGroupName]="i">
+                  <input
+                    [size]="tagItem.value.length"
+                    #tagItem
+                    readonly
+                    formControlName="title"
+                    class="border-0 selectedTagInput outline-0"
+                  />
+
+                  <button class="delete-tag-btn btn" (click)="deleteTag(i)">
+                    <fa-icon [icon]="faTimes"></fa-icon>
+                  </button>
+                </div>
+              </div>
+              <!-- <button (click)="addTags()">add</button> -->
+            </div>
+            <!-- <button class="btn btn-dark  my-2" (click)="saveTags()">save Tags</button> -->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<app-toast
+  [show]="toast"
+  [autohide]="true"
+  [delay]="2500"
+  [message]="'Tag Added!'"
+></app-toast>

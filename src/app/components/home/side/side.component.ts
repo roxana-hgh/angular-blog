@@ -10,6 +10,8 @@ export class SideComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
+    //ToDo: search blogs
   }
 
 }

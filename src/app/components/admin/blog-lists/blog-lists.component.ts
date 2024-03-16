@@ -3,7 +3,7 @@ import {
   ModalDismissReasons,
   NgbModal,
 } from '@ng-bootstrap/ng-bootstrap';
-import {  Router } from '@angular/router';
+import {  Router, ActivatedRoute, Params } from '@angular/router';
 import { Blog } from 'src/app/interfaces/blog';
 import { BlogsService } from 'src/app/services/blogs.service';
 import { ConfirmDeleteComponent } from 'src/app/modals/confirm-delete/confirm-delete.component';
@@ -18,11 +18,14 @@ export class BlogListsComponent implements OnInit {
   blogs!: Blog[];
   checksToggle: boolean = false;
   selected: number = 0;
+  sortAZ: boolean = false;
+  sortZA: boolean = false;
 
   constructor(
     private blogsService: BlogsService,
     private modal: NgbModal,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
@@ -34,8 +37,11 @@ export class BlogListsComponent implements OnInit {
       this.prepareBlogs(blogs);
       this.blogs = blogs;
     });
-  }
 
+   
+    
+
+  }
   private prepareBlogs(blogs: any[]) {
     // each blog has a property named check: true if check in table and false for uncheck
     // it use for do action on group blogs
@@ -64,12 +70,6 @@ export class BlogListsComponent implements OnInit {
       blog.check = this.checksToggle;
     });
   }
-
-  // ToDo:
-  //   get selected id
-  //   get selected title
-  //   delete selected
-  //   show modal base on message
 
   getCheckeds(): any {
     // return: list of blog --> return all blogs which their check prop is equal to true
@@ -137,6 +137,22 @@ export class BlogListsComponent implements OnInit {
       this.delete(blog.id)
     })
   }
+
+  //ToDo:
+  // sort blogs
+
+  sortAtoZ() {
+    this.sortAZ = true;
+    this.sortZA = false;
+    this.blogs = this.blogs.sort((a, b) => a.title.localeCompare(b.title))
+  }
+
+  sortZtoA() {
+    this.sortAZ = false;
+    this.sortZA = true;
+    this.blogs = this.blogs.sort((a, b) => b.title.localeCompare(a.title))
+  }
+ 
 }
 
 

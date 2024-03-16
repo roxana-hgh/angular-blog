@@ -1,0 +1,18 @@
+
+@if (show){
+
+<div class="toast-container">
+    <ngb-toast
+    class="toast"
+    [delay]="delay"
+    [autohide]="autohide"
+    
+    (hide)="show = false; autohide = true"
+    [class.bg-dark]="true"
+    >
+    <div class="toast-content">{{message}}</div>
+    
+    </ngb-toast>
+</div>
+}
+
