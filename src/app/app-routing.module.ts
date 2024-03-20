@@ -6,6 +6,8 @@ import { SingleBlogComponent } from './components/single-blog/single-blog.compon
 import { AdminComponent } from './components/admin/admin.component';
 import { BlogListsComponent } from './components/admin/blog-lists/blog-lists.component';
 import { AddEditBlogComponent } from './components/admin/add-edit-blog/add-edit-blog.component';
+import { DashbordComponent } from './components/admin/dashbord/dashbord.component';
+import { MenuComponent } from './components/admin/menu/menu.component';
 
 
 const routes: Routes = [
@@ -13,9 +15,11 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'blog/:id', component: SingleBlogComponent },
   { path: 'admin', component: AdminComponent, children: [
-    { path: '', component: BlogListsComponent },
+    { path: '', component: DashbordComponent },
+    { path: 'blogs', component: BlogListsComponent },
     { path: 'add-blog', component: AddEditBlogComponent },
-    { path: 'edit-blog/:id', component: AddEditBlogComponent }
+    { path: 'edit-blog/:id', component: AddEditBlogComponent },
+    { path: 'menus', component: MenuComponent }
   ]}
 
 ];

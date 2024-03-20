@@ -46,8 +46,10 @@ export class BlogListsComponent implements OnInit {
     // each blog has a property named check: true if check in table and false for uncheck
     // it use for do action on group blogs
 
-    blogs.map((blog: { check: boolean }) => {
+    blogs.map((blog: { check: boolean, date: Date }) => {
       blog.check = false;
+      blog.date = new Date(blog.date);
+      
     });
   }
 
@@ -138,20 +140,28 @@ export class BlogListsComponent implements OnInit {
     })
   }
 
-  //ToDo:
-  // sort blogs
 
-  sortAtoZ() {
-    this.sortAZ = true;
-    this.sortZA = false;
-    this.blogs = this.blogs.sort((a, b) => a.title.localeCompare(b.title))
-  }
 
-  sortZtoA() {
-    this.sortAZ = false;
-    this.sortZA = true;
-    this.blogs = this.blogs.sort((a, b) => b.title.localeCompare(a.title))
+  SortBy(e:any){
+    const sortBy = e.target.id
+    
+    
+    switch (sortBy) {
+      case "Newest":
+        this.blogs = this.blogs.sort((a, b) =>  b.date.getTime() - a.date.getTime())
+        break
+      case "A-Z":
+        this.blogs = this.blogs.sort((a, b) => a.title.localeCompare(b.title))
+        break
+      case "Z-A":
+        this.blogs = this.blogs.sort((a, b) => b.title.localeCompare(a.title))
+        break
+      default:
+        this.blogs.sort((a, b) => a.date.getTime() - b.date.getTime());
+    }
+    
   }
+ 
  
 }
 

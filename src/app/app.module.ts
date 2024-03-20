@@ -24,6 +24,8 @@ import { AddEditBlogComponent } from './components/admin/add-edit-blog/add-edit-
 import { BlogListsComponent } from './components/admin/blog-lists/blog-lists.component';
 import { ConfirmDeleteComponent } from './modals/confirm-delete/confirm-delete.component';
 import { SearchComponent } from './components/search/search.component';
+import { DashbordComponent } from './components/admin/dashbord/dashbord.component';
+import { MenuComponent } from './components/admin/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { SearchComponent } from './components/search/search.component';
     AddEditBlogComponent,
     BlogListsComponent,
     SearchComponent,
+    DashbordComponent,
+    MenuComponent,
     ConfirmDeleteComponent,
     SanitizedHtmlPipe
   ],
