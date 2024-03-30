@@ -1,0 +1,32 @@
+<div class="modal-header">
+    
+
+    <span class="modal-title ">
+        <ng-container *ngIf="menuItem">
+          Edit {{menuItem.title}}
+          </ng-container>
+      
+          <ng-container *ngIf="!menuItem">
+            Add MenuItem
+           
+          </ng-container>
+    </span>
+    <button type="button" class="btn-close ms-0" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+
+<div class="modal-body">
+    <form [formGroup]="menuForm" (submit)="onformSubmit()" action="" class="">
+        <div class="mb-3">
+            <label for="menuTitleInput" class="form-label">Title</label>
+            <input type="text" formControlName="title" class="form-control" id="menuTitleInput">
+          </div>
+          <div class="mb-3">
+            <label for="menuLinkInput" class="form-label">Link Path</label>
+            <input type="text" formControlName="link" class="form-control" id="menuLinkInput" placeholder="ex: /Blogs">
+          </div>
+
+         <button type="submit" class="btn btn-success d-block ms-auto px-4 py-1">save</button>
+    </form>
+
+    
+</div>

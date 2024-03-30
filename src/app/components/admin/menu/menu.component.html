@@ -1,1 +1,45 @@
-<p>menu works!</p>
+<div class="container">
+    <h4 class="">Manage Header Navigation Menu </h4>
+    <div class="row my-3 py-3">
+        <div class="col-lg-9 border rounded p-3">
+           <div class="d-flex justify-content-between align-items-center">
+            <h5 class="">Menu Items</h5>
+            <button (click)="openModal(null)" class="btn btn-dark">Add Menu Item</button>
+            
+           </div>
+
+           <div class="menu-list-container my-3">
+            <ul class="list-group menus-list py-3">
+                
+                <li class="list-group-item menu-item d-flex justify-content-between align-items-center " *ngFor="let menu of menus"> 
+                    <div class="info">
+                        <p class="mb-1">{{menu.title}}</p>
+                    <small class="text-muted"><fa-icon class="text-muted icon me-2" [icon]="linkIcon"></fa-icon><span class="text-primary ">{{menu.link}}</span></small>
+                    </div>
+
+                    <div class="actions">
+                        <button (click)="openModal(menu)" class="btn p-1">
+                            <fa-icon class="text-muted icon" [icon]="EditIcon"></fa-icon>
+                        </button>
+                        <button (click)="delete(menu.id)" class="btn p-1">
+                            <fa-icon class="text-muted icon" [icon]="deleteIcon"></fa-icon>
+                        </button>
+
+                    </div>
+                
+                </li>
+            
+              </ul>
+
+           </div>
+
+        </div>
+    </div>
+</div>
+
+<app-toast
+  [show]="toast"
+  [autohide]="true"
+  [delay]="2500"
+  [message]="toastMessage"
+></app-toast>
