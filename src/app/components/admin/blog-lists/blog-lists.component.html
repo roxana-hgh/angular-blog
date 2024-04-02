@@ -1,51 +1,143 @@
 <div class="head my-3 d-flex justify-content-between border rounded p-3">
-   <div class="d-flex align-items-center gap-3 " >
-    <div class="form-check ">
-        <input class="form-check-input" title="Toggle all" [(ngModel)]="checksToggle" (change)="toggleAllSelect()" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault"*ngIf="checkedCount() > 0">{{ checkedCount() }} item selected
-        </label>
+  <div class="d-flex align-items-center gap-3">
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        title="Toggle all"
+        [(ngModel)]="checksToggle"
+        (change)="toggleAllSelect()"
+        type="checkbox"
+        value=""
+        id="flexCheckDefault"
+      />
+      <label
+        class="form-check-label"
+        for="flexCheckDefault"
+        *ngIf="checkedCount() > 0"
+        >{{ checkedCount() }} item selected
+      </label>
     </div>
+    <div class="sort d-flex align-items-center  gap-3 mx-3">
+        <span>Sort:</span>
+      <div class="sort-option">
+        <input
+          type="radio"
+          class="btn-check"
+          name="sortby"
+          id="Newest"
+          autocomplete="off"
+          (change)="SortBy($event)"
+          
+        />
+        <label class="btn btn-outline-secondary" for="Newest">Newest</label>
+      </div>
+      <div class="sort-option">
+        <input
+          type="radio"
+          class="btn-check"
+          name="sortby"
+          id="Oldest"
+          autocomplete="off"
+          (change)="SortBy($event)"
+        />
+        <label class="btn btn-outline-secondary" for="Oldest">Oldest</label>
+      </div>
+      <div class="sort-option">
+        <input
+          type="radio"
+          class="btn-check"
+          name="sortby"
+          id="A-Z"
+          autocomplete="off"
+          (change)="SortBy($event)"
+        />
+        <label class="btn btn-outline-secondary" for="A-Z">A-Z</label>
+      </div>
 
-      
-        <button type="button" (click)="sortAtoZ()" [ngClass]="{active: sortAZ}" class="btn btn-outline-secondary">Sort: A-Z</button>
-        <button type="button" (click)="sortZtoA()" [ngClass]="{active: sortZA}" class="btn btn-outline-secondary ">Sort: Z-A</button>
-        <button *ngIf="checkedCount() > 0" type="button" (click)="openConfirmDeleteModal()" class="btn btn-outline-danger">Delete</button>
-
-   </div>
-    <button class="btn btn-dark fw-bolde"  [routerLink]="['/admin','add-blog']">Add new Blog</button>
+      <div class="sort-option">
+        <input
+          type="radio"
+          class="btn-check"
+          name="sortby"
+          id="Z-A"
+          autocomplete="off"
+          (change)="SortBy($event)"
+        />
+        <label class="btn btn-outline-secondary" for="Z-A">Z-A</label>
+      </div>
+    </div>
+    
+    <button
+      *ngIf="checkedCount() > 0"
+      type="button"
+      (click)="openConfirmDeleteModal()"
+      class="btn btn-outline-danger"
+    >
+      Delete
+    </button>
+  </div>
+  <button class="btn btn-dark fw-bolde" [routerLink]="['/admin', 'add-blog']">
+    Add new Blog
+  </button>
 </div>
 
-<ul class="list-group ">
-    <li class="list-group-item d-flex align-items-center" *ngFor="let blog of blogs">
-        <input class="form-check-input me-1" [(ngModel)]="blog.check" (change)="checkedCount()" type="checkbox" value="" id="Checkbox{{blog.id}}">
-        <label class="form-check-label w-100  mx-3" for="Checkbox{{blog.id}}">
-            <div class="blog-item d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center">
-                    <img  src="{{blog.image}}" class="d-block mx-3 rounded" alt="">
-                <h5 class="title"><a [routerLink]="['/admin','edit-blog', blog.id]">{{blog.title}}</a></h5>
-                </div>
-                <div class="d-block ms-auto">
-                    <a [routerLink]="['/admin','edit-blog', blog.id]" class="btn text-secondary">edit</a>
-                    <button (click)="delete(blog.id)"  class="btn text-danger">delete</button>
-                </div>
-            </div>
-
-        </label>
-    </li>
-    
+<ul class="list-group">
+  <li
+    class="list-group-item d-flex align-items-center"
+    *ngFor="let blog of blogs"
+  >
+    <input
+      class="form-check-input me-1"
+      [(ngModel)]="blog.check"
+      (change)="checkedCount()"
+      type="checkbox"
+      value=""
+      id="Checkbox{{ blog.id }}"
+    />
+    <label class="form-check-label w-100 mx-3" for="Checkbox{{ blog.id }}">
+      <div class="blog-item d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+          <img src="{{ blog.image }}" class="d-block mx-3 rounded" alt="" />
+          <h5 class="title">
+            <a [routerLink]="['/admin', 'edit-blog', blog.id]">{{
+              blog.title
+            }}</a>
+          </h5>
+        </div>
+        <div class="d-block ms-auto">
+          <a
+            [routerLink]="['/admin', 'edit-blog', blog.id]"
+            class="btn text-secondary"
+            >edit</a
+          >
+          <button (click)="delete(blog.id)" class="btn text-danger">
+            delete
+          </button>
+        </div>
+      </div>
+    </label>
+  </li>
 </ul>
 
 <ng-template #content let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Delete Blog</h4>
-        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <div class="modal-body">
-        Are you Sure?
-        
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" (click)="modal.close('Save click')">Cancel</button>
-        <button type="button" class="btn btn-danger" >Yes</button>
-    </div>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Delete Blog</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">Are you Sure?</div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      (click)="modal.close('Save click')"
+    >
+      Cancel
+    </button>
+    <button type="button" class="btn btn-danger">Yes</button>
+  </div>
 </ng-template>

@@ -19,6 +19,7 @@
     "@angular/platform-browser": "^17.1.2",
     "@angular/platform-browser-dynamic": "^17.1.2",
     "@angular/router": "^17.1.2",
+    "@circlon/angular-tree-component": "^11.0.4",
     "@ckeditor/ckeditor5-angular": "^7.0.1",
     "@ckeditor/ckeditor5-build-classic": "^41.0.0",
     "@ckeditor/ckeditor5-build-decoupled-document": "^41.0.0",

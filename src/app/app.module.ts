@@ -10,6 +10,7 @@ import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
+
 import { SanitizedHtmlPipe } from './pipes/sanitized-html.pipe';
 import { ToastComponent } from './components/shared/toast/toast.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -24,6 +25,9 @@ import { AddEditBlogComponent } from './components/admin/add-edit-blog/add-edit-
 import { BlogListsComponent } from './components/admin/blog-lists/blog-lists.component';
 import { ConfirmDeleteComponent } from './modals/confirm-delete/confirm-delete.component';
 import { SearchComponent } from './components/search/search.component';
+import { DashbordComponent } from './components/admin/dashbord/dashbord.component';
+import { MenuComponent } from './components/admin/menu/menu.component';
+import { MenuFormComponent } from './modals/menu-form/menu-form/menu-form.component';
 
 @NgModule({
   declarations: [
@@ -39,8 +43,11 @@ import { SearchComponent } from './components/search/search.component';
     AddEditBlogComponent,
     BlogListsComponent,
     SearchComponent,
+    DashbordComponent,
+    MenuComponent,
     ConfirmDeleteComponent,
-    SanitizedHtmlPipe
+    SanitizedHtmlPipe,
+    MenuFormComponent
   ],
   imports: [
     BrowserModule,

@@ -14,7 +14,8 @@ export class AllBlogsComponent implements OnInit {
  
   ngOnInit(): void {
     this.blogsService.get_all_blogs().subscribe((blogs) => {
-      this.blogs = blogs;
+      this.blogs = blogs; 
+     
     });
   }
 

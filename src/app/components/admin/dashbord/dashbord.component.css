@@ -1,0 +1,17 @@
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #3838f7;
+}
+
+.icon {
+    font-size: 3rem;
+}
+
+h6 {
+    color:#757575
+}

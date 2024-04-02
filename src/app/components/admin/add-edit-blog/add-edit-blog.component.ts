@@ -25,7 +25,8 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./add-edit-blog.component.css'],
 })
 export class AddEditBlogComponent implements OnInit {
-  loader: boolean = false;
+  Tagloader: boolean = false;
+  imageloader: boolean = false;
   toast: boolean = false;
   faTimes = faTimes;
   form!: FormGroup;
@@ -61,7 +62,7 @@ export class AddEditBlogComponent implements OnInit {
     return this.tagform.controls['tagsArray'] as FormArray;
   }
 
-  addTagToForm(tag: Tag | null) {
+  addTagToForm(tag: Tag ) {
     if (tag) {
       const Tag_Form = this.fb.group({
         id: [tag.id],
@@ -69,11 +70,7 @@ export class AddEditBlogComponent implements OnInit {
       });
       return Tag_Form;
     } else {
-      const Tag_Form = this.fb.group({
-        id: [null],
-        title: ['', Validators.required],
-      });
-      return Tag_Form;
+      return
     }
   }
 
@@ -174,11 +171,11 @@ export class AddEditBlogComponent implements OnInit {
 
     let taginput: any = this.selectedTag;
     if (!all_tags_name.includes(taginput)) {
-      this.loader = true;
+      this.Tagloader = true;
       this.TagsService.add_Tag({ id: null, title: taginput }).subscribe(
         (t: any) => {
           this.Tags.push(this.addTagToForm(t));
-          this.loader = false;
+          this.Tagloader = false;
           this.toast = true;
           console.log('newtag added with service', t);
         }
@@ -200,20 +197,77 @@ export class AddEditBlogComponent implements OnInit {
     }, 200);
   }
 
+  // onFileChange(event: any) {
+  //   const reader = new FileReader();
+
+  //   if (event.target.files && event.target.files.length) {
+  //     const [file] = event.target.files;
+  //     reader.readAsDataURL(file);
+
+  //     reader.onload = () => {
+  //       this.form.patchValue({
+  //         image: reader.result
+  //       });
+  //     };
+  //   }
+  // }
+
   onFileChange(event: any) {
     const reader = new FileReader();
-
+  
+    
+  
     if (event.target.files && event.target.files.length) {
       const [file] = event.target.files;
       reader.readAsDataURL(file);
-
+  
       reader.onload = () => {
         this.form.patchValue({
           image: reader.result
         });
+        
       };
+    } else if (event.target.value) {
+      // Handle the case when a file path is added to an empty input
+      this.convertFilePathToBase64(event.target.value).then(base64 => {
+        this.form.patchValue({
+          image: base64
+        });
+        
+      });
     }
   }
+  
+  openFileInput() {
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    fileInput.click();
+  }
+  
+  // Convert file path to base64
+  convertFilePathToBase64(filePath: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.src = filePath;
+  
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+  
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(img, 0, 0, img.width, img.height);
+  
+        const base64 = canvas.toDataURL('image/jpeg'); // Adjust the type if necessary
+        resolve(base64);
+      };
+  
+      img.onerror = error => {
+        reject(error);
+      };
+    });
+  }
+  
+  
 
   save() {
     this.form.value.tags = this.Tags.value.map((tag: Tag) => tag.id);

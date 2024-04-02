@@ -8,7 +8,7 @@
     </div>
     <button
       type="submit"
-      [disabled]="form.invalid || loader"
+      [disabled]="form.invalid || Tagloader"
       class="btn btn-success d-block px-5"
     >
       Save
@@ -60,30 +60,57 @@
       </div>
     </div>
     <div class="col-12 col-lg-4 p-3">
-      <div class="border rounded px-2 py-1" *ngIf="form.value.title">
+      <div class="border rounded px-2 py-1 position-relative " >
         <div class="p-2">
-          <label for="imageInput" class="col-form-label fw-bold">Image</label>
+          <label for="imageInput" class="col-form-label fw-bold mb-2">Image</label>
 
-          <img
+          <img *ngIf="form.value.image"
             class="w-100 rounded d-block my-2"
             src="{{ form.value.image }}"
             alt=""
           />
           <div class="">
             <!-- <input class="form-control" type="file" name="" id="imageInput"> -->
-            <input
+            <!-- <input
               class="form-control"
               formControlName="image"
               type="file"
               name=""
               id=""
               (change)="onFileChange($event)"
-            />
+            /> -->
+            <input
+  class="form-control d-none "
+  type="file"
+  name=""
+  id="fileInput"
+  (change)="onFileChange($event)"
+/>
+
+            <input
+            class="form-control"
+            formControlName="image"
+            type="hidden"
+            name=""
+            id="hiddenImageInput"
+          />
+          
+          <button type="button" class="btn btn-outline-dark d-block w-100" (click)="openFileInput()">Choose Image</button>
+          </div>
+        </div>
+
+        <div class="w-100 h-100 p-0" #imagesLoader *ngIf="imageloader">
+          <div
+            class="d-flex justify-content-center align-items-center tagsLoader"
+          >
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
           </div>
         </div>
       </div>
       <div class="border rounded my-3 position-relative">
-        <div class="w-100 h-100 p-0" #tagsLoader *ngIf="loader">
+        <div class="w-100 h-100 p-0" #tagsLoader *ngIf="Tagloader">
           <div
             class="d-flex justify-content-center align-items-center tagsLoader"
           >
