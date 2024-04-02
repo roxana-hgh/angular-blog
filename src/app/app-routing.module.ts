@@ -8,19 +8,25 @@ import { BlogListsComponent } from './components/admin/blog-lists/blog-lists.com
 import { AddEditBlogComponent } from './components/admin/add-edit-blog/add-edit-blog.component';
 import { DashbordComponent } from './components/admin/dashbord/dashbord.component';
 import { MenuComponent } from './components/admin/menu/menu.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { AuthGuard } from './components/auth/auth.guard';
 
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'blog/:id', component: SingleBlogComponent },
-  { path: 'admin', component: AdminComponent, children: [
+  { path: 'admin', component: AdminComponent,  canActivate: [AuthGuard], 
+  canActivateChild: [AuthGuard] ,children: [
     { path: '', component: DashbordComponent },
     { path: 'blogs', component: BlogListsComponent },
     { path: 'add-blog', component: AddEditBlogComponent },
     { path: 'edit-blog/:id', component: AddEditBlogComponent },
     { path: 'menus', component: MenuComponent }
-  ]}
+  ]},
+  {path: 'login', component:LoginComponent},
+  {path: '**', component: NotFoundComponent }
 
 ];
 

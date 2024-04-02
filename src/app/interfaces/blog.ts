@@ -1,7 +1,7 @@
 import { Tag } from "./tag";
 
 export interface Blog {
-  id: number;
+  id: any;
   title: string;
   image: string;
   description: string;

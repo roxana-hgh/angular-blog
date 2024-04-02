@@ -9,6 +9,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getStorage, provideStorage } from '@angular/fire/storage';
+import { environment } from '../environments/environment';
 
 
 import { SanitizedHtmlPipe } from './pipes/sanitized-html.pipe';
@@ -28,6 +32,10 @@ import { SearchComponent } from './components/search/search.component';
 import { DashbordComponent } from './components/admin/dashbord/dashbord.component';
 import { MenuComponent } from './components/admin/menu/menu.component';
 import { MenuFormComponent } from './modals/menu-form/menu-form/menu-form.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { AuthGuard } from './components/auth/auth.guard';
+
 
 @NgModule({
   declarations: [
@@ -47,7 +55,9 @@ import { MenuFormComponent } from './modals/menu-form/menu-form/menu-form.compon
     MenuComponent,
     ConfirmDeleteComponent,
     SanitizedHtmlPipe,
-    MenuFormComponent
+    MenuFormComponent,
+    LoginComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -59,12 +69,15 @@ import { MenuFormComponent } from './modals/menu-form/menu-form/menu-form.compon
     ReactiveFormsModule,
     FontAwesomeModule,
     CKEditorModule,
-    ToastComponent
+    ToastComponent,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideStorage(() => getStorage()),
+    provideFirestore(() => getFirestore()),
   ],
   exports: [
     SanitizedHtmlPipe
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
