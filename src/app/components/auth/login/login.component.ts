@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
   });;
   isAuthenticated: boolean = false;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,   private router: Router,) { }
 
   ngOnInit(): void {
     
@@ -27,7 +28,7 @@ export class LoginComponent implements OnInit {
     if (username === 'admin' && password === 'admin') {
       this.isAuthenticated = true;
       localStorage.setItem('isAuthenticated', 'true');
-      alert('Login successful!');
+      this.router.navigate(['home']);
     } else {
       alert('Invalid username or password.');
     }
