@@ -85,8 +85,8 @@
     },
     {
       "id": 3,
-      "title": "test",
-      "link": "/test"
+      "title": "add new blog",
+      "link": "/admin/add-blog"
     }
   ],
   "colloctions": [],

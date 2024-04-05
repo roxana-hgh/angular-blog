@@ -4,12 +4,22 @@
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
           <div class="card " style="border-radius: 1rem;">
             <div class="card-body p-5 text-center">
+            
   
-              <form [formGroup]="loginForm" (ngSubmit)="login()" class="mb-md-3 mt-md-4 pb-3">
+              <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()" class="mb-md-3 mt-md-4 pb-3">
+                
   
                 <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-                <p class="text-white-50 mb-5">Please enter your login and password!</p>
-  
+
+                <div class="alert alert-danger d-flex justify-content-between " *ngIf="wasFailed" role="alert" >
+                  <strong class="d-block">Login Failed!</strong>
+                  <button type="button" class="btn-close " data-bs-dismiss="alert"  aria-label="Close"></button>
+                </div>
+
+                <div class="alert alert-success" role="alert" *ngIf="wasSuccess">
+                  <strong>Login success!</strong> Redirecting to Home Page ...
+                </div>
+                
                 <div class="form-outline form-white mb-4">
                     <label class="form-label w-100 text-start" for="usernme">Username</label>
                   <input type="text" id="username" class="form-control form-control-lg" formControlName="username" required />
