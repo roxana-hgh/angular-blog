@@ -20,8 +20,8 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
+   // canActivate: [AuthGuard],
+    //canActivateChild: [AuthGuard],
     children: [
       { path: '', component: DashbordComponent },
       { path: 'blogs', component: BlogListsComponent },

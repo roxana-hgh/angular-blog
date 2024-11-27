@@ -19,26 +19,26 @@
     <div class="">
       <div
         class="border rounded py-2 px-3 d-flex gap-2"
-        *ngIf="isAuthenticated"
+       
       >
         <small class="">Hello ! </small>
 
         <button routerLink="/admin" title="setting" class="btn btn-dark py-0 px-2">
           <i class="fa-solid fa-gear"></i>
         </button>
-        <button (click)="logout()" title="logout" class="btn btn-dark py-0 px-2">
+        <!-- <button (click)="logout()" title="logout" class="btn btn-dark py-0 px-2">
           <i class="fa-solid fa-right-from-bracket"></i>
-        </button>
+        </button> -->
       </div>
 
-      <button
+      <!-- <button
         *ngIf="!isAuthenticated"
         routerLink="/login"
         title="login"
         class="btn btn-dark py-0 px-2"
       >
         <i class="fa-solid fa-right-to-bracket"></i>
-      </button>
+      </button> -->
       <button
         class="navbar-toggler border-0"
         type="button"

@@ -27,9 +27,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     })
 
     //  to check if the user is authenticated
-    this.userSub = this.authService.user.subscribe(user => {
-      this.isAuthenticated = !!user
-    })
+    // this.userSub = this.authService.user.subscribe(user => {
+    //   this.isAuthenticated = !!user
+    // })
  
   }
 

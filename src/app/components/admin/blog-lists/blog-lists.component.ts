@@ -130,12 +130,14 @@ export class BlogListsComponent implements OnInit {
   }
   delete(id: number) {
     this.blogsService.delete_Blog(id).subscribe(() => {
-      this.router.navigateByUrl('/admin/blogs/');
+      this.router.navigateByUrl('/admin/blogs');
     });
   }
 
   deleteBlogs(checked_blogs: Blog[]) {
     checked_blogs.forEach(blog => {
+      console.log(blog.id);
+      
       this.delete(blog.id)
     })
   }
