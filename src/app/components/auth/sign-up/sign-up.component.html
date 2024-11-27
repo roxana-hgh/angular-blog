@@ -4,28 +4,28 @@
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
           <div class="card " style="border-radius: 1rem;">
             <div class="card-body p-5 text-center">
-              <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()" class="mb-md-3 mt-md-4 pb-3">
-                <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+              <form [formGroup]="RegisterForm" (ngSubmit)="onRegister()"  class="mb-md-3 mt-md-4 pb-3">
+                <h2 class="fw-bold mb-2 text-uppercase">SignUp</h2>
                 <div class="alert alert-danger my-3 " *ngIf="error" role="alert" >
-                  <strong class="d-block">Sign In Failed!</strong> 
+                  <strong class="d-block">Sign Up Failed!</strong> 
                   <span class="mt-2 d-block ">{{error}}</span>
        
                 </div>
                 <div class="alert alert-success" role="alert" *ngIf="wasSuccess">
-                  <strong>Login success!</strong> Redirecting to Home Page ...
+                  <strong>Resdister success!</strong> 
                 </div>
                 <div class="form-outline form-white mb-4">
                     <label class="form-label w-100 text-start" for="usernme">Email</label>
                   <input type="email" id="username" class="form-control form-control-lg" formControlName="email" required />
                 </div>
                 <div class="form-outline form-white mb-4">
-                  <label class="form-label w-100 text-start" for="typePasswordX">Password</label>
-                  <input type="password" id="typePasswordX" class="form-control form-control-lg" formControlName="password" required />
+                  <label class="form-label w-100 text-start" for="typePassword">Password</label>
+                  <input type="password" id="typePassword" class="form-control form-control-lg" formControlName="password" required />
                 </div>
-                <button class="btn btn-dark btn-lg px-5 w-100" type="submit">Login</button>
+                <button class="btn btn-dark btn-lg px-5 w-100" type="submit">Sign Up</button>
               </form>
               <div>
-                <p class="mb-0">Don't have an account? <a href="#!" class="text-dark-50 fw-bold">Sign Up</a>
+                <p class="mb-0">Already have an account? <a href="/login" class="text-dark-50 fw-bold">Sign In</a>
                 </p>
               </div>
             </div>

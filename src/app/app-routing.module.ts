@@ -11,6 +11,7 @@ import { MenuComponent } from './components/admin/menu/menu.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AuthGuard } from './components/auth/auth.guard';
+import { SignUpComponent } from './components/auth/sign-up/sign-up.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -29,6 +30,7 @@ const routes: Routes = [
       { path: 'menus', component: MenuComponent },
     ],
   },
+  { path: 'register', component: SignUpComponent },
   { path: 'login', component: LoginComponent },
   { path: '**', component: NotFoundComponent },
 ];

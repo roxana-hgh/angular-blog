@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SecurityContext } from '@angular/core';
 import {
   FormGroup,
   FormArray,
@@ -56,7 +56,19 @@ export class AddEditBlogComponent implements OnInit {
     private TagsService: TagsService,
     private sanitizer: DomSanitizer,
     private fb: FormBuilder
-  ) {}
+  ) {
+    
+  }
+
+  sanitizeInput(value: any) {
+    const sanitizedValue = this.sanitizer.sanitize(
+      SecurityContext.HTML,
+      value
+    );
+    const sanitizedValue1 = sanitizedValue ? sanitizedValue.toString() : '';
+    console.log(sanitizedValue1);
+    
+  }
 
   get Tags() {
     return this.tagform.controls['tagsArray'] as FormArray;
@@ -88,6 +100,9 @@ export class AddEditBlogComponent implements OnInit {
       this.formGenerator(null);
     }
     this.get_all_tags();
+    this.form.controls['title'].valueChanges.subscribe((value: any) => {
+      this.sanitizeInput(value);
+    });
   }
 
   private captureIdFromURL() {

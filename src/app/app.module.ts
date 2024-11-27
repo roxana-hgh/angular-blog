@@ -35,6 +35,7 @@ import { MenuFormComponent } from './modals/menu-form/menu-form/menu-form.compon
 import { LoginComponent } from './components/auth/login/login.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AuthGuard } from './components/auth/auth.guard';
+import { SignUpComponent } from './components/auth/sign-up/sign-up.component';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { AuthGuard } from './components/auth/auth.guard';
     SanitizedHtmlPipe,
     MenuFormComponent,
     LoginComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
 import { Menu } from 'src/app/interfaces/menu';
 import { AuthService } from 'src/app/services/auth.service';
 import { MenusService } from 'src/app/services/menus.service'; 
@@ -10,10 +11,11 @@ import { MenusService } from 'src/app/services/menus.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   userIcon = faUserCircle;
   isAuthenticated: boolean = false;
+  private userSub !: Subscription;
 
   menus: Menu[] = []
 
@@ -24,18 +26,21 @@ export class HeaderComponent implements OnInit {
       this.menus = menus
     })
 
-    // Subscribe to the isAuthenticated() method to check if the user is authenticated
-    this.authService.isAuthenticated().subscribe(
-      isAuthenticated => {
-        this.isAuthenticated = isAuthenticated;
-      }
-    );
+    //  to check if the user is authenticated
+    this.userSub = this.authService.user.subscribe(user => {
+      this.isAuthenticated = !!user
+    })
+ 
   }
 
   logout(){
-    this.authService.logout()
+    // this.authService.logout()
     this.router.navigate(['home']);
 
+  }
+
+  ngOnDestroy(): void {
+    this.userSub.unsubscribe()
   }
 
   
